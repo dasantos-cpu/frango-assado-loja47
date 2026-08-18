@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frango Assado — Análise Gerencial | Loja 47 Catete</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg: #0d0705;
+    --bg-card: #1a1210;
+    --bg-card-2: #221713;
+    --border: #3a2620;
+    --text: #f5ece7;
+    --text-muted: #b8a89e;
+    --text-muted2: #7d6b62;
+    --primary: #ff5a1f;
+    --primary-2: #ff8a3d;
+    --red: #e0342a;
+    --ok: #4caf6d;
+    --warn: #e0a72a;
+    --bad: #e0342a;
+    --gray: #6b5c54;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background: radial-gradient(ellipse at top, #241109 0%, var(--bg) 55%);
+    color:var(--text);
+    min-height:100vh;
+  }
+  header.hero{
+    padding:32px 24px 24px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    flex-wrap:wrap;
+    gap:24px;
+    align-items:center;
+    justify-content:space-between;
+    background:linear-gradient(180deg, rgba(255,90,31,0.08), transparent);
+  }
+  .hero-left h1{
+    margin:0 0 4px;
+    font-size:clamp(1.6rem,3vw,2.4rem);
+    letter-spacing:-0.02em;
+    background:linear-gradient(90deg,var(--primary),var(--primary-2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero-left p{margin:0;color:var(--text-muted);font-size:.95rem;}
+  header.hero{flex-direction:row;align-items:center;justify-content:flex-start;gap:18px;}
+  header.hero .hero-top{display:flex;flex-shrink:0;}
+  nav{
+    display:flex;
+    gap:4px;
+    flex-wrap:wrap;
+    padding:12px 24px;
+    border-bottom:1px solid var(--border);
+    position:sticky;top:0;
+    background:rgba(13,7,5,0.92);
+    backdrop-filter:blur(8px);
+    z-index:10;
+  }
+  nav button{
+    background:transparent;
+    border:1px solid transparent;
+    color:var(--text-muted);
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:.85rem;
+    font-weight:600;
+    transition:.15s;
+    white-space:nowrap;
+  }
+  nav button:hover{color:var(--text);background:var(--bg-card);}
+  nav button.active{
+    color:#fff;
+    background:linear-gradient(90deg,var(--primary),var(--red));
+    box-shadow:0 4px 14px rgba(255,90,31,.35);
+  }
+  main{padding:24px;max-width:1200px;margin:0 auto;}
+  section{display:none;animation:fade .25s ease;}
+  section.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  @media(prefers-reduced-motion: reduce){
+    section{animation:none;}
+  }
+  h2{
+    font-size:1.3rem;margin:0 0 4px;
+    color:#fff;
+  }
+  h2 .sub{display:block;font-size:.8rem;color:var(--text-muted2);font-weight:400;margin-top:2px;}
+  .grid{display:grid;gap:16px;}
+  .grid-4{grid-template-columns:repeat(4,1fr);}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+  @media(max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr);}.grid-2{grid-template-columns:1fr;}}
+  @media(max-width:560px){.grid-4{grid-template-columns:1fr;}}
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px;
+  }
+  .kpi .label{font-size:.75rem;color:var(--text-muted2);text-transform:uppercase;letter-spacing:.04em;}
+  .kpi .value{font-size:1.6rem;font-weight:700;color:#fff;margin:6px 0 2px;}
+  .kpi .value.orange{color:var(--primary-2);}
+  .kpi .note{font-size:.72rem;color:var(--text-muted);}
+  .tag{
+    display:inline-block;
+    font-size:.65rem;
+    font-weight:700;
+    letter-spacing:.03em;
+    padding:2px 8px;
+    border-radius:20px;
+    margin-left:6px;
+    text-transform:uppercase;
+  }
+  .tag.confirmado{background:rgba(76,175,109,.15);color:var(--ok);border:1px solid rgba(76,175,109,.4);}
+  .tag.informado{background:rgba(224,167,42,.15);color:var(--warn);border:1px solid rgba(224,167,42,.4);}
+  .tag.estimado{background:rgba(255,138,61,.15);color:var(--primary-2);border:1px solid rgba(255,138,61,.4);}
+  .tag.naoencontrado{background:rgba(224,52,42,.15);color:var(--bad);border:1px solid rgba(224,52,42,.4);}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border);}
+  th{color:var(--text-muted2);font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;font-weight:600;}
+  tbody tr:hover{background:rgba(255,255,255,.02);}
+  .section-block{margin-bottom:28px;}
+  .callout{
+    border-left:3px solid var(--primary);
+    background:rgba(255,90,31,.06);
+    padding:12px 16px;
+    border-radius:0 10px 10px 0;
+    font-size:.85rem;
+    color:var(--text-muted);
+    margin:12px 0;
+  }
+  .callout.warn{border-color:var(--warn);background:rgba(224,167,42,.06);}
+  .callout.bad{border-color:var(--bad);background:rgba(224,52,42,.06);}
+  a{color:var(--primary-2);}
+  .chart-wrap{position:relative;height:280px;}
+
+  /* ---- COMPONENTE PREMIUM DE PRODUTO ---- */
+  .product-hero{
+    position:relative;
+    display:grid;
+    grid-template-columns:minmax(220px,340px) 1fr;
+    gap:28px;
+    align-items:center;
+    background:linear-gradient(160deg, var(--bg-card-2), var(--bg-card));
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:24px;
+    margin-bottom:20px;
+    overflow:hidden;
+  }
+  @media(max-width:720px){
+    .product-hero{grid-template-columns:1fr;text-align:center;}
+    .product-hero .product-info{align-items:center;}
+  }
+  .product-hero .product-media{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:220px;
+  }
+  .product-hero .product-media img{
+    max-width:100%;
+    max-height:280px;
+    width:auto;
+    object-fit:contain;
+    border-radius:10px;
+    opacity:0;
+    transform:translateY(18px) scale(.96);
+    animation: productEnter .7s cubic-bezier(.16,.9,.3,1) forwards;
+    animation-delay:.1s;
+    filter:drop-shadow(0 18px 26px rgba(0,0,0,.5));
+    transition:transform .35s cubic-bezier(.16,.9,.3,1), filter .35s ease;
+    cursor:default;
+  }
+  .product-hero .product-media img:hover{
+    transform:translateY(-4px) scale(1.035);
+    filter:drop-shadow(0 24px 30px rgba(255,90,31,.25));
+  }
+  @keyframes productEnter{
+    from{opacity:0;transform:translateY(18px) scale(.96);}
+    to{opacity:1;transform:translateY(0) scale(1);}
+  }
+  @media(prefers-reduced-motion: reduce){
+    .product-hero .product-media img{animation:none;opacity:1;transform:none;transition:none;}
+  }
+  .product-hero .product-info{display:flex;flex-direction:column;gap:6px;}
+  .product-hero .product-name{
+    font-size:clamp(1.3rem,2.4vw,1.9rem);
+    font-weight:800;color:#fff;letter-spacing:-.01em;margin:0;
+  }
+  .product-hero .product-code{
+    display:inline-block;
+    font-size:.75rem;font-weight:700;letter-spacing:.05em;
+    color:var(--primary-2);
+    background:rgba(255,90,31,.12);
+    border:1px solid rgba(255,90,31,.35);
+    padding:4px 12px;border-radius:20px;
+    width:fit-content;
+  }
+  .product-hero .product-desc{color:var(--text-muted);font-size:.85rem;margin:4px 0 8px;}
+  .product-hero .product-kpis{display:flex;gap:14px;flex-wrap:wrap;}
+  .product-hero .product-kpis .mini{
+    background:rgba(0,0,0,.25);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:8px 14px;
+    min-width:110px;
+  }
+  .product-hero .product-kpis .mini .l{font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;}
+  .product-hero .product-kpis .mini .v{font-size:1.05rem;font-weight:700;color:#fff;}
+
+  .status-compare{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+  .status-compare .block{
+    flex:1;min-width:150px;
+    border-radius:10px;
+    padding:10px 14px;
+    border:1px solid var(--border);
+  }
+  .status-compare .block.informado{background:rgba(224,167,42,.07);border-color:rgba(224,167,42,.35);}
+  .status-compare .block.confirmado{background:rgba(76,175,109,.07);border-color:rgba(76,175,109,.35);}
+  .status-compare .block .l{font-size:.65rem;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted2);}
+  .status-compare .block .v{font-size:1.15rem;font-weight:700;color:#fff;margin-top:2px;}
+
+  .info-note{font-size:.72rem;color:var(--text-muted2);font-style:italic;margin-top:4px;}
+  .hist-badge{
+    display:inline-block;font-size:.62rem;font-weight:800;letter-spacing:.03em;
+    color:var(--bad);background:rgba(224,52,42,.14);border:1px solid rgba(224,52,42,.4);
+    padding:3px 9px;border-radius:6px;text-transform:uppercase;
+  }
+  .comparability{font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;}
+  .comparability.ALTA{background:rgba(76,175,109,.15);color:var(--ok);}
+  .comparability.MEDIA{background:rgba(224,167,42,.15);color:var(--warn);}
+  .comparability.BAIXA{background:rgba(224,52,42,.15);color:var(--bad);}
+  footer{padding:24px;text-align:center;color:var(--text-muted2);font-size:.75rem;border-top:1px solid var(--border);}
+
+  /* ---- ACCORDION "ENTENDA" ---- */
+  .explain{margin-top:10px;}
+  .explain summary{
+    list-style:none;cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:.75rem;font-weight:700;color:var(--primary-2);
+    padding:5px 12px;border:1px solid rgba(255,90,31,.35);border-radius:20px;
+    background:rgba(255,90,31,.08);
+    user-select:none;
+    width:fit-content;
+  }
+  .explain summary::-webkit-details-marker{display:none;}
+  .explain summary::after{content:"▸";transition:transform .2s;}
+  .explain[open] summary::after{transform:rotate(90deg);}
+  .explain summary:hover{background:rgba(255,90,31,.16);}
+  .explain .explain-body{
+    margin-top:10px;
+    background:rgba(0,0,0,.22);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 16px;
+    display:grid;
+    gap:10px;
+  }
+  .explain .explain-row .k{
+    font-size:.65rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--primary-2);margin-bottom:2px;
+  }
+  .explain .explain-row .v{font-size:.83rem;color:var(--text-muted);line-height:1.5;}
+
+  .divergence-box{
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    background:rgba(224,52,42,.06);
+    border:1px solid rgba(224,52,42,.3);
+    border-radius:12px;
+    padding:14px 18px;margin-top:14px;
+  }
+  .divergence-box .side{text-align:center;}
+  .divergence-box .side .l{font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;}
+  .divergence-box .side .v{font-size:1.3rem;font-weight:800;color:#fff;}
+  .divergence-box .vs{color:var(--text-muted2);font-size:.8rem;}
+  .divergence-box .diff{
+    margin-left:auto;font-size:.8rem;color:var(--bad);font-weight:700;
+    background:rgba(224,52,42,.12);padding:6px 12px;border-radius:8px;
+  }
+
+  /* ---- STATUS DE PESQUISA (concorrência) ---- */
+  .research-status{font-size:.62rem;font-weight:800;letter-spacing:.02em;padding:3px 9px;border-radius:6px;text-transform:uppercase;display:inline-block;white-space:nowrap;}
+  .research-status.confirmado{background:rgba(76,175,109,.15);color:var(--ok);border:1px solid rgba(76,175,109,.4);}
+  .research-status.pendente{background:rgba(224,167,42,.15);color:var(--warn);border:1px solid rgba(224,167,42,.4);}
+  .research-status.historico{background:rgba(224,52,42,.15);color:var(--bad);border:1px solid rgba(224,52,42,.4);}
+  .research-status.naocomparavel{background:rgba(107,92,84,.2);color:var(--gray);border:1px solid var(--border);}
+
+  .layer-diagram{display:flex;flex-direction:column;gap:2px;align-items:center;margin:16px 0;}
+  .layer-diagram .layer{
+    background:var(--bg-card-2);border:1px solid var(--border);border-radius:8px;
+    padding:8px 18px;font-size:.8rem;color:var(--text-muted);text-align:center;min-width:260px;
+  }
+  .layer-diagram .layer.highlight{border-color:var(--primary);color:#fff;background:rgba(255,90,31,.1);font-weight:700;}
+  .layer-diagram .arrow{color:var(--text-muted2);font-size:.9rem;}
+
+  .map-diagram{
+    display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto auto auto;
+    gap:10px;max-width:560px;margin:16px auto;text-align:center;font-size:.78rem;
+  }
+  .map-diagram .node{background:var(--bg-card-2);border:1px solid var(--border);border-radius:10px;padding:10px 6px;color:var(--text-muted);}
+  .map-diagram .node.center{background:linear-gradient(135deg,var(--primary),var(--red));color:#fff;font-weight:800;border:none;}
+  .map-diagram .empty{visibility:hidden;}
+
+  .discover-list{display:grid;gap:8px;}
+  .discover-list .item{
+    display:flex;align-items:center;gap:10px;
+    background:var(--bg-card);border:1px solid var(--border);border-radius:8px;
+    padding:9px 14px;font-size:.83rem;color:var(--text-muted);
+  }
+  .discover-list .item .n{
+    flex-shrink:0;width:22px;height:22px;border-radius:50%;
+    background:rgba(255,90,31,.15);color:var(--primary-2);font-weight:700;font-size:.72rem;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* ---- BEAM CIRCLE (abstrato, pequeno, sem produto/texto) ---- */
+  .beam-wrap{
+    display:flex;justify-content:center;align-items:center;
+  }
+  .beam{
+    position:relative;
+    width:104px;
+    height:104px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .beam .ring{
+    position:absolute;border-radius:50%;
+    border:1px solid rgba(255,138,61,.22);
+  }
+  .beam .ring-1{inset:0;animation:spinCW 40s linear infinite;}
+  .beam .ring-2{inset:16%;border-color:rgba(255,90,31,.18);animation:spinCCW 55s linear infinite;}
+  .beam .ring-3{inset:32%;border-color:rgba(224,52,42,.16);animation:spinCW 70s linear infinite;}
+  .beam .beam-line{
+    position:absolute;inset:0;border-radius:50%;
+    background:conic-gradient(from 0deg, transparent 0deg, rgba(255,90,31,.28) 10deg, transparent 26deg, transparent 180deg, rgba(255,90,31,.16) 194deg, transparent 214deg);
+    animation:spinCW 40s linear infinite;
+  }
+  @keyframes spinCW{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  @keyframes spinCCW{from{transform:rotate(0deg);}to{transform:rotate(-360deg);}}
+
+  .beam .beam-core{
+    position:relative;z-index:3;
+    width:14px;height:14px;border-radius:50%;
+    background:radial-gradient(circle, var(--primary-2), var(--primary) 60%, transparent 100%);
+    box-shadow:0 0 10px 2px rgba(255,90,31,.5);
+    animation: corePulse 3.2s ease-in-out infinite;
+  }
+  @keyframes corePulse{
+    0%,100%{transform:scale(1);opacity:.85;}
+    50%{transform:scale(1.25);opacity:1;}
+  }
+
+  .beam .orbit-point{
+    position:absolute;z-index:2;
+    transform-origin:0 0;
+  }
+  .beam .dot{
+    display:block;border-radius:50%;
+    background:var(--primary-2);
+    box-shadow:0 0 6px 1px rgba(255,138,61,.55);
+    animation: dotPulse 4s ease-in-out infinite;
+  }
+  .beam .orbit-point.ring1 .dot{width:5px;height:5px;}
+  .beam .orbit-point.ring2 .dot{width:4px;height:4px;background:var(--primary);animation-duration:5s;}
+  .beam .orbit-point.ring3 .dot{width:3px;height:3px;background:var(--red);opacity:.8;animation-duration:6s;}
+  @keyframes dotPulse{
+    0%,100%{opacity:.55;transform:scale(1);}
+    50%{opacity:1;transform:scale(1.3);}
+  }
+
+  @media(prefers-reduced-motion: reduce){
+    .beam .ring, .beam .beam-line, .beam .beam-core, .beam .dot{animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-top">
+    <div class="beam-wrap">
+      <div class="beam" id="beam" aria-hidden="true">
+        <div class="beam-line"></div>
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-3"></div>
+
+        <div class="beam-core"></div>
+
+        <!-- pontos orbitais: só bolinhas, posicionadas via JS (data-ring, data-angle) -->
+        <div class="orbit-point ring1" data-ring="1" data-angle="0"><span class="dot"></span></div>
+        <div class="orbit-point ring1" data-ring="1" data-angle="150"><span class="dot"></span></div>
+        <div class="orbit-point ring1" data-ring="1" data-angle="260"><span class="dot"></span></div>
+
+        <div class="orbit-point ring2" data-ring="2" data-angle="60"><span class="dot"></span></div>
+        <div class="orbit-point ring2" data-ring="2" data-angle="200"><span class="dot"></span></div>
+        <div class="orbit-point ring2" data-ring="2" data-angle="320"><span class="dot"></span></div>
+
+        <div class="orbit-point ring3" data-ring="3" data-angle="30"><span class="dot"></span></div>
+        <div class="orbit-point ring3" data-ring="3" data-angle="180"><span class="dot"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-left">
+    <h1>FRANGO ASSADO</h1>
+    <p>Análise Gerencial — Loja 47 Catete · Consumo Local</p>
+  </div>
+</header>
+
+<nav id="nav">
+  <button data-target="visao-geral" class="active">1. Visão Geral</button>
+  <button data-target="inteiro">2. Frango Inteiro</button>
+  <button data-target="metade">3. Meio Frango</button>
+  <button data-target="evolucao">4. Evolução de Vendas</button>
+  <button data-target="custos">5. Custos</button>
+  <button data-target="fornecedor">6. Fornecedor</button>
+  <button data-target="mercado">7. Mercado Brasileiro</button>
+  <button data-target="concorrentes">8. Concorrentes</button>
+  <button data-target="oportunidades">9. Oportunidades</button>
+  <button data-target="fontes">10. Fontes</button>
+</nav>
+
+<main>
+
+  <!-- 1. VISÃO GERAL -->
+  <section id="visao-geral" class="active">
+    <div class="section-block">
+      <h2>O que estamos analisando? <span class="sub">Frango Assado do Consumo Local, Loja 47 — Catete · Códigos 9366 (inteiro) e 9521 (metade)</span></h2>
+      <p style="color:var(--text-muted);font-size:.9rem;max-width:760px;">
+        Esta página analisa os dois produtos de frango assado vendidos na Loja 47: <b>Frango Assado Inteiro (9366)</b> e <b>Frango Assado Metade (9521)</b>. Os dados vêm de 6 planilhas de venda (CurvaABC) e de pesquisa externa sobre fornecedor, mercado e concorrência.
+      </p>
+
+      <div class="callout warn">
+        As 6 planilhas <b>CurvaABC</b> não têm coluna de mês/data nem metadado de período. Tratadas aqui como <b>Período 1 a 6</b> (ordem de arquivo) — <b>Período 1 não é necessariamente Janeiro</b>, nem qualquer outro mês. Não foi identificado a qual mês cada planilha corresponde.
+      </div>
+
+      <div class="grid grid-4" style="margin-top:16px;">
+        <div class="card kpi">
+          <div class="label">Venda total (9366+9521)</div>
+          <div class="value orange">R$ 192.372,81</div>
+          <div class="note">soma 6 períodos <span class="tag confirmado">CONFIRMADO</span></div>
+          <details class="explain">
+            <summary>Entenda</summary>
+            <div class="explain-body">
+              <div class="explain-row"><div class="k">O que é</div><div class="v">Soma de tudo que os dois produtos (inteiro + metade) faturaram nos 6 períodos disponíveis nas planilhas.</div></div>
+              <div class="explain-row"><div class="k">Como foi calculado</div><div class="v">Soma da coluna "Valor R$" do código 9366 e do código 9521 em cada uma das 6 planilhas CurvaABC.</div></div>
+              <div class="explain-row"><div class="k">Limitação</div><div class="v">Os 6 períodos não têm mês identificado — não sabemos se cobrem um ano inteiro, meio ano, ou períodos não contínuos.</div></div>
+              <div class="explain-row"><div class="k">Fonte</div><div class="v">6 arquivos CurvaABC_*.xlsx, pasta COMPARATIVO DE VENDA.</div></div>
+            </div>
+          </details>
+        </div>
+        <div class="card kpi">
+          <div class="label">Unidades vendidas</div>
+          <div class="value">5.138 un</div>
+          <div class="note">4.533 inteiros + 605 metades <span class="tag confirmado">CONFIRMADO</span></div>
+          <details class="explain">
+            <summary>Entenda</summary>
+            <div class="explain-body">
+              <div class="explain-row"><div class="k">O que é</div><div class="v">Soma de todas as unidades vendidas dos dois códigos, somando os registros dos 6 períodos disponíveis.</div></div>
+              <div class="explain-row"><div class="k">Como foi calculado</div><div class="v">Soma da coluna "Quantidade" do código 9366 (4.533) + código 9521 (605) nas 6 planilhas.</div></div>
+              <div class="explain-row"><div class="k">Limitação</div><div class="v">Não representa necessariamente um período fixo de tempo (ex: 1 ano) — os 6 períodos ainda não têm data confirmada.</div></div>
+              <div class="explain-row"><div class="k">Fonte</div><div class="v">6 arquivos CurvaABC_*.xlsx.</div></div>
+            </div>
+          </details>
+        </div>
+        <div class="card kpi">
+          <div class="label">Preço médio 9366</div>
+          <div class="value">R$ 39,78</div>
+          <div class="note">informado: R$ 39,00 <span class="tag informado">INFORMADO</span></div>
+          <details class="explain">
+            <summary>Entenda</summary>
+            <div class="explain-body">
+              <div class="explain-row"><div class="k">O que é</div><div class="v">Valor médio efetivamente identificado nas seis bases analisadas para o Frango Inteiro (9366).</div></div>
+              <div class="explain-row"><div class="k">Como foi calculado</div><div class="v">Valor total vendido (R$180.323,22) ÷ quantidade total registrada (4.533 un).</div></div>
+              <div class="explain-row"><div class="k">Comparação</div><div class="v">Valor informado anteriormente: R$39,00. Diferença: +R$0,78 (~+2%).</div></div>
+              <div class="explain-row"><div class="k">Status</div><div class="v"><span class="tag confirmado">CONFIRMADO PELA BASE ANALISADA</span></div></div>
+            </div>
+          </details>
+        </div>
+        <div class="card kpi">
+          <div class="label">Situação da margem</div>
+          <div class="value" style="color:var(--text-muted);font-size:1.1rem;">depende do custo oficial</div>
+          <div class="note">custo de compra não encontrado <span class="tag naoencontrado">NÃO ENCONTRADO</span></div>
+          <details class="explain">
+            <summary>Entenda</summary>
+            <div class="explain-body">
+              <div class="explain-row"><div class="k">O que é</div><div class="v">Indicador de que não existe, em nenhuma planilha disponível, o custo oficial de compra do frango — logo margem real não pode ser calculada, só estimada.</div></div>
+              <div class="explain-row"><div class="k">Limitação</div><div class="v">Ver aba Custos para as estimativas possíveis com os valores informados pelo usuário (não confirmados).</div></div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block card">
+      <h3 style="margin-top:0;font-size:.95rem;">Qualidade e confiabilidade dos dados desta análise</h3>
+      <div class="grid grid-2">
+        <div>
+          <b style="font-size:.85rem;color:#fff;">O que é sólido</b>
+          <p style="color:var(--text-muted);font-size:.83rem;">Quantidade, receita e preço médio dos 2 códigos, extraídos diretamente das 6 planilhas — sem cálculo especulativo.</p>
+        </div>
+        <div>
+          <b style="font-size:.85rem;color:#fff;">O que é frágil</b>
+          <p style="color:var(--text-muted);font-size:.83rem;">Identificação de mês dos períodos, custo oficial, peso físico real, e preço atual de concorrentes — nenhum confirmado ainda.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block card">
+      <h2 style="font-size:1.05rem;">O que os dados confirmam até aqui</h2>
+      <table>
+        <thead><tr><th>Item</th><th>Informado</th><th>Encontrado na planilha</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Preço de venda — Inteiro (9366)</td><td>R$ 39,00</td><td>R$ 39,78 (médio, 6 períodos)</td><td><span class="tag informado">divergência pequena ~2%</span></td></tr>
+          <tr><td>Peso do frango inteiro</td><td>1,800 kg</td><td>1,600 kg inferido (tonelagem ÷ quantidade)</td><td><span class="tag naoencontrado">divergência real</span></td></tr>
+          <tr><td>Custo por frango</td><td>R$ 22,00</td><td>sem coluna de custo na planilha</td><td><span class="tag naoencontrado">NÃO ENCONTRADO</span></td></tr>
+          <tr><td>Referência R$/kg insumo</td><td>R$ 12,00/kg</td><td>sem coluna de custo na planilha</td><td><span class="tag naoencontrado">NÃO ENCONTRADO</span></td></tr>
+          <tr><td>Preço de venda — Metade (9521)</td><td>—</td><td>R$ 19,92 (médio, 6 períodos)</td><td><span class="tag confirmado">CONFIRMADO</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 2. FRANGO INTEIRO -->
+  <section id="inteiro">
+    <h2>Frango Assado Inteiro <span class="sub">Código 9366 — "FRANGO ASSADO P/VIAGEM 1KG"</span></h2>
+
+    <div class="product-hero">
+      <div class="product-media">
+        <img src="assets/INTEIRO.png" alt="Frango Assado Inteiro" onerror="this.style.opacity=0.15">
+      </div>
+      <div class="product-info">
+        <span class="product-code">CÓD. 9366</span>
+        <h3 class="product-name">FRANGO ASSADO INTEIRO</h3>
+        <p class="product-desc">Descrição na planilha: "FRANGO ASSADO P/VIAGEM 1KG" — rótulo "1KG" não interpretado como peso físico real, ver nota abaixo.</p>
+        <div class="product-kpis">
+          <div class="mini"><div class="l">Qtd total</div><div class="v">4.533 un</div></div>
+          <div class="mini"><div class="l">Receita total</div><div class="v">R$ 180.323,22</div></div>
+          <div class="mini"><div class="l">Preço médio</div><div class="v">R$ 39,78</div></div>
+        </div>
+        <div class="status-compare">
+          <div class="block informado"><div class="l">Informado</div><div class="v">R$ 39,00</div></div>
+          <div class="block confirmado"><div class="l">Planilha (médio)</div><div class="v">R$ 39,78</div></div>
+        </div>
+
+        <details class="explain">
+          <summary>Entenda o preço médio</summary>
+          <div class="explain-body">
+            <div class="explain-row"><div class="k">O que é</div><div class="v">Valor médio efetivamente identificado nas seis bases analisadas.</div></div>
+            <div class="explain-row"><div class="k">De onde veio</div><div class="v">Planilhas CurvaABC — código 9366, coluna "Valor R$" e coluna "Quantidade".</div></div>
+            <div class="explain-row"><div class="k">Como foi calculado</div><div class="v">Valor total vendido ÷ quantidade registrada, em cada período e no total.</div></div>
+            <div class="explain-row"><div class="k">O que significa</div><div class="v">O preço praticado ficou estável (39,75 a 39,82) nos 6 períodos — não houve reajuste relevante detectável nessa janela.</div></div>
+            <div class="explain-row"><div class="k">Status</div><div class="v"><span class="tag confirmado">CONFIRMADO PELA BASE ANALISADA</span></div></div>
+          </div>
+        </details>
+
+        <div class="divergence-box">
+          <div class="side"><div class="l">Informado</div><div class="v">1,800 kg</div></div>
+          <div class="vs">vs</div>
+          <div class="side"><div class="l">Inferido da planilha</div><div class="v">1,600 kg</div></div>
+          <div class="diff">Divergência a validar — diferença ≈ 0,200 kg</div>
+        </div>
+        <details class="explain">
+          <summary>Entenda o peso</summary>
+          <div class="explain-body">
+            <div class="explain-row"><div class="k">O que é</div><div class="v">Peso médio inferido da planilha: 1,600 kg. Calculado a partir da relação tonelagem ÷ quantidade existente na base — não é peso físico medido.</div></div>
+            <div class="explain-row"><div class="k">Limitação</div><div class="v">Isso não deve ser tratado automaticamente como peso físico oficial. Causa da diferença com o informado (1,800 kg) ainda não é conhecida — pode ser variação de balança, período diferente, ou o "1KG" da descrição ser nominal, não real.</div></div>
+            <div class="explain-row"><div class="k">Fonte</div><div class="v">Coluna Tonelagem ÷ Quantidade, 6 planilhas CurvaABC.</div></div>
+          </div>
+        </details>
+
+        <div class="grid grid-2" style="margin-top:14px;">
+          <div class="mini" style="background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:10px;padding:8px 14px;">
+            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">Maior período</div>
+            <div class="v" id="maiorPeriodoInteiro" style="font-size:1.05rem;font-weight:700;color:#fff;">—</div>
+          </div>
+          <div class="mini" style="background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:10px;padding:8px 14px;">
+            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">Menor período</div>
+            <div class="v" id="menorPeriodoInteiro" style="font-size:1.05rem;font-weight:700;color:#fff;">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="chart-wrap"><canvas id="chartInteiroQtd"></canvas></div>
+    </div>
+    <div class="card">
+      <table>
+        <thead><tr><th>Período</th><th>Qtd (un)</th><th>Valor (R$)</th><th>Preço médio/un</th><th>Peso médio inferido da planilha</th></tr></thead>
+        <tbody id="tabelaInteiro"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3. MEIO FRANGO -->
+  <section id="metade">
+    <h2>Frango Assado Metade <span class="sub">Código 9521 — "FRANGO ASSADO METADE P/VIAGEM 500G"</span></h2>
+
+    <div class="product-hero">
+      <div class="product-media">
+        <img src="assets/METADE.png" alt="Frango Assado Metade" onerror="this.style.opacity=0.15">
+      </div>
+      <div class="product-info">
+        <span class="product-code">CÓD. 9521</span>
+        <h3 class="product-name">FRANGO ASSADO METADE</h3>
+        <p class="product-desc">Descrição na planilha: "FRANGO ASSADO METADE P/VIAGEM 500G".</p>
+        <div class="product-kpis">
+          <div class="mini"><div class="l">Qtd total</div><div class="v">605 un</div></div>
+          <div class="mini"><div class="l">Receita total</div><div class="v">R$ 12.049,59</div></div>
+          <div class="mini"><div class="l">Preço médio</div><div class="v">R$ 19,92</div></div>
+        </div>
+        <div class="status-compare">
+          <div class="block confirmado"><div class="l">Planilha (médio)</div><div class="v">R$ 19,92</div></div>
+        </div>
+        <p class="info-note">Peso médio inferido da planilha: 0,500 kg — bate exatamente com o rótulo "500G", consistente nos 6 períodos. Diferente do código 9366, aqui não há divergência entre rótulo e cálculo.</p>
+
+        <details class="explain">
+          <summary>Entenda</summary>
+          <div class="explain-body">
+            <div class="explain-row"><div class="k">O que é</div><div class="v">Metade do frango assado, vendida separadamente com código próprio (9521) — não é um cálculo de "metade do preço do inteiro", é produto e preço registrados de forma independente na planilha.</div></div>
+            <div class="explain-row"><div class="k">De onde veio</div><div class="v">Planilhas CurvaABC — código 9521.</div></div>
+            <div class="explain-row"><div class="k">Comparação com o inteiro</div><div class="v">Preço médio metade (R$19,92) é ~50,1% do preço médio inteiro (R$39,78) — proporcional, mas isso NÃO confirma que o custo da metade seja exatamente metade do custo do inteiro (perdas, corte e manuseio podem diferir).</div></div>
+            <div class="explain-row"><div class="k">Limitação</div><div class="v">Não presumir margem da metade sem custo de aquisição correspondente — mesma limitação do código 9366.</div></div>
+          </div>
+        </details>
+
+        <div class="grid grid-2" style="margin-top:14px;">
+          <div class="mini" style="background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:10px;padding:8px 14px;">
+            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">Maior período</div>
+            <div class="v" id="maiorPeriodoMetade" style="font-size:1.05rem;font-weight:700;color:#fff;">—</div>
+          </div>
+          <div class="mini" style="background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:10px;padding:8px 14px;">
+            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">Menor período</div>
+            <div class="v" id="menorPeriodoMetade" style="font-size:1.05rem;font-weight:700;color:#fff;">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="chart-wrap"><canvas id="chartMetadeQtd"></canvas></div>
+    </div>
+    <div class="card">
+      <table>
+        <thead><tr><th>Período</th><th>Qtd (un)</th><th>Valor (R$)</th><th>Preço médio/un</th><th>Peso médio inferido da planilha</th></tr></thead>
+        <tbody id="tabelaMetade"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4. EVOLUÇÃO -->
+  <section id="evolucao">
+    <h2>Evolução de Vendas <span class="sub">Inteiro × Metade, todos os períodos</span></h2>
+
+    <div class="card" style="margin-bottom:16px;">
+      <b style="font-size:.85rem;color:#fff;">O que este gráfico mostra?</b>
+      <p style="color:var(--text-muted);font-size:.85rem;margin:6px 0 0;">Comparação do faturamento dos códigos 9366 (inteiro) e 9521 (metade) ao longo dos seis períodos encontrados nas planilhas CurvaABC.</p>
+      <div class="callout bad" style="margin-top:10px;">
+        <b>Importante:</b> as planilhas não permitem atualmente identificar esses períodos como janeiro, fevereiro etc. <b>Período 1 ≠ Janeiro confirmado.</b> Qualquer leitura de sazonalidade é especulativa até essa identificação existir.
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="chart-wrap"><canvas id="chartReceita"></canvas></div>
+    </div>
+
+    <div class="grid grid-4">
+      <div class="card kpi">
+        <div class="label">Participação Inteiro no faturamento</div>
+        <div class="value orange" id="partInteiro">—</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Participação Metade no faturamento</div>
+        <div class="value orange" id="partMetade">—</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Maior período (receita total)</div>
+        <div class="value" id="maiorPeriodoTotal" style="font-size:1.2rem;">—</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Menor período (receita total)</div>
+        <div class="value" id="menorPeriodoTotal" style="font-size:1.2rem;">—</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <b style="font-size:.85rem;color:#fff;">Leitura factual (sem conclusão causal)</b>
+      <p style="color:var(--text-muted);font-size:.83rem;margin:6px 0 0;" id="leituraFactual">—</p>
+    </div>
+  </section>
+
+  <!-- 5. CUSTOS -->
+  <section id="custos">
+    <h2>Custo e Resultado <span class="sub">Separação clara entre informado, confirmado e estimado</span></h2>
+    <div class="callout bad">
+      <b>Margem real depende da confirmação do custo oficial de compra.</b> Nenhuma das planilhas disponíveis (CurvaABC, Checklist) contém coluna de custo de aquisição do frango.
+    </div>
+    <div class="grid grid-2" style="margin-top:16px;">
+      <div class="card">
+        <h3 style="margin-top:0;font-size:.95rem;">Valores informados pelo usuário <span class="tag informado">INFORMADO</span></h3>
+        <table>
+          <tbody>
+            <tr><td>Peso aproximado</td><td>1,800 kg</td></tr>
+            <tr><td>Referência de custo</td><td>R$ 12,00/kg</td></tr>
+            <tr><td>Custo aproximado por frango</td><td>R$ 22,00</td></tr>
+            <tr><td>Preço de venda</td><td>R$ 39,00</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;font-size:.95rem;">Confirmado na planilha <span class="tag confirmado">CONFIRMADO</span></h3>
+        <table>
+          <tbody>
+            <tr><td>Preço médio identificado</td><td>≈ R$ 39,78</td></tr>
+            <tr><td>Peso médio inferido</td><td>≈ 1,600 kg</td></tr>
+          </tbody>
+        </table>
+        <h3 style="font-size:.95rem;margin:16px 0 0;">Não encontrado <span class="tag naoencontrado">NÃO ENCONTRADO</span></h3>
+        <p style="color:var(--text-muted);font-size:.83rem;margin:6px 0 0;">Custo oficial de aquisição. Nota fiscal. Histórico de compra da Fazenda das Antas.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.95rem;">Simulações <span class="hist-badge" style="color:var(--primary-2);background:rgba(255,138,61,.14);border-color:rgba(255,138,61,.4);">SIMULAÇÃO — NÃO É CUSTO OFICIAL</span></h3>
+      <table>
+        <thead><tr><th>Simulação</th><th>Cálculo</th><th>Resultado</th><th>Rótulo</th></tr></thead>
+        <tbody>
+          <tr><td>Usando referência informada (R$12,00/kg)</td><td>1,600 kg × R$12,00</td><td>R$ 19,20 custo simulado</td><td><span class="tag estimado">SIMULAÇÃO</span></td></tr>
+          <tr><td>Resultado bruto com custo simulado</td><td>R$39,78 − R$19,20</td><td>R$ 20,58 / un</td><td><span class="tag estimado">RESULTADO BRUTO ESTIMADO</span></td></tr>
+          <tr><td>Usando custo informado diretamente (R$22,00)</td><td>R$39,78 − R$22,00</td><td>R$ 17,78 / un</td><td><span class="tag estimado">RESULTADO BRUTO ESTIMADO</span></td></tr>
+        </tbody>
+      </table>
+      <p style="color:var(--text-muted);font-size:.8rem;margin-top:10px;">Nenhum dos dois resultados acima é lucro líquido ou margem real. Ainda podem existir custos não considerados: temperos, embalagem, mão de obra, energia, perdas, impostos e outros — apenas listados como possíveis componentes, sem valor atribuído (não inventado).</p>
+    </div>
+
+    <div class="callout warn" style="margin-top:16px;">
+      A diferença entre as duas simulações é de R$2,80/unidade — o custo oficial de compra precisa ser confirmado antes de qualquer decisão de precificação.
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="explain-row"><div class="k">O dado mostra</div><div class="v">Preço de venda estável (~R$39,78) e simulações de resultado bruto entre R$17,78 e R$20,58/unidade, a depender da premissa de custo usada.</div></div>
+      <div class="explain-row" style="margin-top:8px;"><div class="k">O que ainda não sabemos</div><div class="v">O custo oficial de aquisição do frango — sem ele, não existe margem real, só simulação.</div></div>
+      <div class="explain-row" style="margin-top:8px;"><div class="k">Próxima validação necessária</div><div class="v">Obter nota fiscal / histórico de compra junto à Fazenda das Antas para substituir a simulação por custo confirmado.</div></div>
+    </div>
+  </section>
+
+  <!-- 6. FORNECEDOR -->
+  <section id="fornecedor">
+    <h2>Fazenda das Antas <span class="sub">Fornecedor informado do Frango Assado</span></h2>
+
+    <div class="card">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--ok);">O QUE SABEMOS <span class="tag confirmado">CONFIRMADO — fonte pública</span></h3>
+      <table>
+        <tbody>
+          <tr><td>Nome</td><td>Fazenda das Antas</td></tr>
+          <tr><td>Atividade</td><td>Avicultura / abate e processamento de frango resfriado, empresa familiar</td></tr>
+          <tr><td>Localização</td><td>Avelar, Paty do Alferes — RJ, 26.950-000</td></tr>
+          <tr><td>Início de atividade</td><td>Propriedade rural desde 1924; negócio familiar iniciado em 1992</td></tr>
+          <tr><td>Área de entrega</td><td>Região Centro-Sul Fluminense (Levy Gasparian, Três Rios, Paraíba do Sul, Paty do Alferes, Miguel Pereira, Vassouras)</td></tr>
+          <tr><td>Produto</td><td>Frango resfriado, inteiro, com/sem miúdos, ou temperado</td></tr>
+          <tr><td>Data da consulta</td><td>18/08/2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--bad);">O QUE NÃO SABEMOS <span class="tag naoencontrado">NÃO ENCONTRADO</span></h3>
+      <ul style="color:var(--text-muted);font-size:.85rem;margin:8px 0 0;padding-left:18px;">
+        <li>Preço negociado especificamente com a Zona Sul</li>
+        <li>Histórico do custo de compra ao longo de 2026</li>
+        <li>Reajustes contratuais aplicados</li>
+        <li>Condições comerciais (volume, prazo, frete)</li>
+      </ul>
+    </div>
+
+    <div class="callout bad" style="margin-top:16px;">
+      <b>Pergunta principal:</b> "O fornecedor aumentou o preço desde janeiro de 2026?"<br>
+      <b>Resposta atual: NÃO HÁ EVIDÊNCIA SUFICIENTE PARA RESPONDER.</b><br>
+      <span style="font-size:.8rem;">Não é correto transformar a cotação nacional de frango (aba Mercado Brasileiro) em reajuste da Fazenda das Antas — são coisas diferentes: uma é preço de mercado no atacado, outra seria o preço negociado deste fornecedor específico.</span>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="explain-row"><div class="k">O dado mostra</div><div class="v">Fornecedor identificado publicamente (Fazenda das Antas, Paty do Alferes-RJ, atividade desde 1924/1992).</div></div>
+      <div class="explain-row" style="margin-top:8px;"><div class="k">O que ainda não sabemos</div><div class="v">Se houve reajuste de preço deste fornecedor específico em 2026 — não há fonte pública sobre isso.</div></div>
+      <div class="explain-row" style="margin-top:8px;"><div class="k">Próxima validação necessária</div><div class="v">Contato direto com a Fazenda das Antas ou checagem de nota fiscal/contrato para confirmar histórico de preço.</div></div>
+    </div>
+  </section>
+
+  <!-- 7. MERCADO BRASILEIRO -->
+  <section id="mercado">
+    <h2>Mercado Brasileiro do Frango <span class="sub">CEPEA/ESALQ — referência de preço da carne de frango, não do produto pronto assado <span class="hist-badge">SÉRIE INCOMPLETA</span></span></h2>
+
+    <div class="card">
+      <b style="font-size:.85rem;color:#fff;">As camadas entre matéria-prima e produto final</b>
+      <div class="layer-diagram">
+        <div class="layer">Mercado de frango (CEPEA/ESALQ)</div>
+        <div class="arrow">↓</div>
+        <div class="layer">Frango vivo</div>
+        <div class="arrow">↓</div>
+        <div class="layer">Frango abatido / resfriado</div>
+        <div class="arrow">↓</div>
+        <div class="layer highlight">Produto adquirido pela empresa (Fazenda das Antas → Loja 47)</div>
+        <div class="arrow">↓</div>
+        <div class="layer">Preparo (tempero, forno, embalagem)</div>
+        <div class="arrow">↓</div>
+        <div class="layer highlight">Frango assado vendido ao consumidor (R$39,78 médio)</div>
+      </div>
+      <p style="color:var(--text-muted);font-size:.82rem;">Essas camadas <b>NÃO são preços equivalentes</b>. As cotações nacionais abaixo servem para <b>tendência de mercado</b> — não são o <b>preço direto do nosso fornecedor</b>.</p>
+    </div>
+
+    <div class="callout warn" style="margin-top:16px;">
+      Cotações abaixo são do <b>frango atacado/resfriado/congelado</b> — isso <b>NÃO É</b> o frango assado pronto vendido ao consumidor.
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <table>
+        <thead><tr><th>Data</th><th>Tipo</th><th>R$/kg</th><th>Fonte</th></tr></thead>
+        <tbody>
+          <tr><td>18/07/2026</td><td>Frango congelado</td><td>R$ 5,11</td><td><a href="https://www.noticiasagricolas.com.br/cotacoes/frango/precos-do-frango-congelado-cepea-esalq" target="_blank">Notícias Agrícolas / CEPEA-ESALQ</a></td></tr>
+          <tr><td>13/08/2026</td><td>Frango resfriado</td><td>R$ 5,19</td><td><a href="https://www.noticiasagricolas.com.br/cotacoes/frango/precos-do-frango-resfriado-cepea-esalq" target="_blank">Notícias Agrícolas / CEPEA-ESALQ</a></td></tr>
+          <tr><td>16/08/2026</td><td>Frango resfriado</td><td>R$ 5,22</td><td><a href="https://www.noticiasagricolas.com.br/cotacoes/frango/precos-do-frango-resfriado-cepea-esalq" target="_blank">Notícias Agrícolas / CEPEA-ESALQ</a></td></tr>
+        </tbody>
+      </table>
+      <p class="info-note" style="margin-top:10px;">Série cobre apenas Jul-Ago/2026 — <b>SÉRIE INCOMPLETA</b> frente ao intervalo pedido (Janeiro/2026 → hoje). Meses sem cotação encontrada não foram preenchidos artificialmente.</p>
+    </div>
+  </section>
+
+  <!-- 8. CONCORRENTES -->
+  <section id="concorrentes">
+    <h2>Pesquisa de Concorrência <span class="sub">Catete, Flamengo, Glória, Laranjeiras, Largo do Machado — <span class="hist-badge">PESQUISA PARCIAL</span></span></h2>
+
+    <div class="callout warn">
+      4 estabelecimentos pesquisados nesta rodada. Apenas <b>2 têm venda de frango assado confirmada</b> (Padaria Viriato Gourmet, Confeitaria Santo Amaro) — os outros 2 (Princesa Supermercados, Boteco Sport Bar) têm produto <b>não confirmado</b> nas fontes consultadas. <b>Nenhum dos 4 tem preço atual (2026) confirmado</b> por fonte pública. Apps de delivery (iFood/Rappi) não indexam preço em busca textual — precisa checagem direta no app.
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0;font-size:.95rem;">Sistema de confiança da pesquisa</h3>
+      <div class="grid grid-4">
+        <div><span class="research-status confirmado">PREÇO ATUAL CONFIRMADO</span><p style="font-size:.75rem;color:var(--text-muted);margin-top:6px;">Fonte atual + produto claramente identificado.</p></div>
+        <div><span class="research-status pendente">PRODUTO CONFIRMADO / PREÇO PENDENTE</span><p style="font-size:.75rem;color:var(--text-muted);margin-top:6px;">Sabemos que vende, não sabemos o preço atual.</p></div>
+        <div><span class="research-status historico">PREÇO HISTÓRICO</span><p style="font-size:.75rem;color:var(--text-muted);margin-top:6px;">Preço encontrado, porém antigo.</p></div>
+        <div><span class="research-status naocomparavel">NÃO COMPARÁVEL</span><p style="font-size:.75rem;color:var(--text-muted);margin-top:6px;">Produto estruturalmente diferente.</p></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.95rem;">Mapa conceitual — eixo Catete/Glória</h3>
+      <p class="info-note">Conceitual, sem distância/tempo calculado (não inventado). Endereços verificáveis na tabela abaixo.</p>
+      <div class="map-diagram">
+        <div class="node empty"></div><div class="node">GLÓRIA<br>Santo Amaro</div><div class="node empty"></div>
+        <div class="node">Princesa</div><div class="node center">LOJA 47<br>CATETE</div><div class="node">Viriato</div>
+        <div class="node empty"></div><div class="node">Boteco Sport Bar</div><div class="node empty"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <table>
+        <thead><tr><th>Concorrente</th><th>Endereço</th><th>Produto</th><th>Preço</th><th>Data</th><th>Comparabilidade</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Padaria Viriato Gourmet</td>
+            <td>R. Bento Lisboa, 72 — Catete</td>
+            <td>Frango assado (referenciado como "o mais gostoso do Rio")</td>
+            <td>R$ 35,90 (histórico — prato de filé grelhado c/ farofa, iFood)</td>
+            <td>Ano de referência incerto <span class="research-status historico">HISTÓRICO</span></td>
+            <td><span class="comparability MEDIA">MÉDIA</span></td>
+            <td><span class="research-status pendente">PRODUTO CONFIRMADO / PREÇO PENDENTE</span></td>
+          </tr>
+          <tr>
+            <td>Princesa Supermercados — Catete</td>
+            <td>Rua do Catete, 120 — Catete</td>
+            <td>Frango assado (venda não confirmada nesta busca)</td>
+            <td>—</td>
+            <td>18/08/2026</td>
+            <td><span class="comparability MEDIA">MÉDIA</span></td>
+            <td><span class="research-status pendente">VENDA NÃO CONFIRMADA — PREÇO NÃO CONFIRMADO</span></td>
+          </tr>
+          <tr>
+            <td>Boteco Sport Bar</td>
+            <td>Rua Andrade Pertence, 07 — Catete</td>
+            <td>Cardápio de boteco/petiscos — frango assado não localizado no cardápio pesquisado</td>
+            <td>—</td>
+            <td>18/08/2026</td>
+            <td><span class="comparability BAIXA">BAIXA</span></td>
+            <td><span class="research-status pendente">PENDENTE — PRODUTO NÃO CONFIRMADO NA FONTE ATUAL</span></td>
+          </tr>
+          <tr>
+            <td>Confeitaria Santo Amaro</td>
+            <td>Rua do Catete, 22 — Glória</td>
+            <td>Frango assado de rotisseria aos fins de semana ("o melhor frango assado da região")</td>
+            <td>R$ 41,90 (relato de ~1 ano atrás)</td>
+            <td>Relato antigo <span class="research-status historico">HISTÓRICO</span></td>
+            <td><span class="comparability ALTA">ALTA</span></td>
+            <td><span class="research-status pendente">PRODUTO CONFIRMADO / PREÇO PENDENTE</span></td>
+          </tr>
+          <tr>
+            <td>Braseiro Machadão</td>
+            <td>Largo do Machado, 2 — Catete</td>
+            <td>Churrascaria — item "frango assado inteiro" não localizado no cardápio pesquisado</td>
+            <td>—</td>
+            <td>18/08/2026</td>
+            <td><span class="comparability BAIXA">BAIXA</span></td>
+            <td><span class="research-status naocomparavel">NÃO COMPARÁVEL</span></td>
+          </tr>
+          <tr>
+            <td>Pesquisa de bairro (Catete/Flamengo/Glória/Laranjeiras)</td>
+            <td>Vários</td>
+            <td>Frango assado inteiro</td>
+            <td>R$ 39,00–39,97</td>
+            <td>2022 <span class="research-status historico">HISTÓRICO</span></td>
+            <td><span class="comparability MEDIA">MÉDIA</span></td>
+            <td><span class="research-status historico">PREÇO HISTÓRICO — NÃO UTILIZAR COMO ATUAL</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout bad" style="margin-top:16px;">
+      Não há, nesta rodada, nenhum concorrente com <b>preço atual confirmado</b> perto da Loja 47. Comparação de preço direta com o mercado ainda não é possível de forma confiável.
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="explain-row"><div class="k">O dado mostra</div><div class="v">2 dos 4 estabelecimentos pesquisados (Viriato, Santo Amaro) confirmadamente vendem frango assado; nenhum tem preço 2026 confirmado.</div></div>
+      <div class="explain-row" style="margin-top:8px;"><div class="k">O que ainda não sabemos</div><div class="v">Preço atual de qualquer concorrente próximo à Loja 47, e se Princesa/Boteco Sport Bar sequer vendem o produto hoje.</div></div>
+      <div class="explain-row" style="margin-top:8px;"><div class="k">Próxima validação necessária</div><div class="v">Checagem direta nos apps de delivery (iFood/Rappi) ou visita presencial aos 4 estabelecimentos.</div></div>
+    </div>
+  </section>
+
+  <!-- 9. OPORTUNIDADES -->
+  <section id="oportunidades">
+    <h2>O que os dados estão dizendo? <span class="sub">Apenas fatos sustentados pelos dados encontrados</span></h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <b>Peso real menor que o informado</b>
+        <p style="color:var(--text-muted);font-size:.85rem;">Tonelagem ÷ quantidade do código 9366 dá 1,6kg médio real em todos os 6 períodos, consistentemente — não 1,8kg como informado. Evidência: coluna Tonelagem/Quantidade de todas as 6 planilhas CurvaABC.</p>
+      </div>
+      <div class="card">
+        <b>Custo de compra não está documentado em nenhuma fonte local</b>
+        <p style="color:var(--text-muted);font-size:.85rem;">Nem CurvaABC nem Checklist têm coluna de custo. Toda margem calculada aqui é estimativa, não fato. Evidência: ausência de coluna nas 15 colunas mapeadas de cada planilha.</p>
+      </div>
+      <div class="card">
+        <b>Preço de venda praticado é consistente</b>
+        <p style="color:var(--text-muted);font-size:.85rem;">R$39,75 a R$39,82 nos 6 períodos (variação de 0,2%) — preço não mudou de forma relevante no intervalo coberto pelas planilhas. Evidência: coluna Valor R$ ÷ Quantidade, todos os períodos.</p>
+      </div>
+      <div class="card">
+        <b>Falta de dado para avaliar concorrência atual</b>
+        <p style="color:var(--text-muted);font-size:.85rem;">4 estabelecimentos pesquisados — apenas 2 com venda de frango assado confirmada (Viriato, Santo Amaro) — e nenhum com preço 2026 confirmado. Qualquer decisão de preço frente à concorrência fica sem base sólida até nova pesquisa (idealmente via apps de delivery diretamente, não busca textual).</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <h3 style="margin-top:0;font-size:1rem;">O que ainda precisamos descobrir?</h3>
+      <p style="color:var(--text-muted);font-size:.82rem;margin-top:0;">Isso transforma falta de informação em plano de investigação — não em conclusão.</p>
+      <div class="discover-list">
+        <div class="item"><span class="n">1</span>Custo oficial de compra junto à Fazenda das Antas</div>
+        <div class="item"><span class="n">2</span>Histórico de custo desde janeiro/2026</div>
+        <div class="item"><span class="n">3</span>Identificação dos meses reais das seis planilhas CurvaABC</div>
+        <div class="item"><span class="n">4</span>Confirmação do peso físico oficial (1,6kg inferido vs 1,8kg informado)</div>
+        <div class="item"><span class="n">5</span>Preço atual — Padaria Viriato Gourmet</div>
+        <div class="item"><span class="n">6</span>Preço atual — Princesa Supermercados (Catete)</div>
+        <div class="item"><span class="n">7</span>Preço atual — Boteco Sport Bar</div>
+        <div class="item"><span class="n">8</span>Preço atual — Confeitaria Santo Amaro</div>
+        <div class="item"><span class="n">9</span>Peso dos produtos concorrentes</div>
+        <div class="item"><span class="n">10</span>Composição/acompanhamentos dos concorrentes (farofa, batata, molho)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. FONTES -->
+  <section id="fontes">
+    <h2>Fontes <span class="sub">Toda informação externa com origem rastreável</span></h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Fonte</th><th>URL</th><th>Data</th><th>Informação</th></tr></thead>
+        <tbody>
+          <tr><td>Fazenda das Antas — site oficial</td><td><a href="https://fazenda-antas.com.br/" target="_blank">fazenda-antas.com.br</a></td><td>18/08/2026</td><td>Perfil do fornecedor</td></tr>
+          <tr><td>Fazenda das Antas — Quem somos</td><td><a href="https://fazenda-antas.com.br/quem-somos/" target="_blank">fazenda-antas.com.br/quem-somos</a></td><td>18/08/2026</td><td>Histórico desde 1924/1992</td></tr>
+          <tr><td>Notícias Agrícolas / CEPEA-ESALQ</td><td><a href="https://www.noticiasagricolas.com.br/cotacoes/frango/precos-do-frango-resfriado-cepea-esalq" target="_blank">precos-do-frango-resfriado-cepea-esalq</a></td><td>18/08/2026</td><td>Cotação frango resfriado R$5,19–5,22/kg</td></tr>
+          <tr><td>Notícias Agrícolas / CEPEA-ESALQ</td><td><a href="https://www.noticiasagricolas.com.br/cotacoes/frango/precos-do-frango-congelado-cepea-esalq" target="_blank">precos-do-frango-congelado-cepea-esalq</a></td><td>18/08/2026</td><td>Cotação frango congelado R$5,11/kg</td></tr>
+          <tr><td>Braseiro Machadão — Rappi</td><td><a href="https://www.rappi.com.br/restaurantes/900642929-braseiro-machadao-frango" target="_blank">rappi.com.br/braseiro-machadao</a></td><td>18/08/2026</td><td>Cardápio/preços, sem item comparável</td></tr>
+          <tr><td>Pesquisa de bairro frango assado (histórica)</td><td>ver observação</td><td>2022 (desatualizado)</td><td>Preços Catete/Flamengo/Glória/Laranjeiras — usado só como referência histórica</td></tr>
+          <tr><td>Padaria Viriato Gourmet — Onde Comer no Rio</td><td><a href="https://ondecomernorio.com/padaria-viriato-gourmet-o-frango-assado-mais-gostoso-do-rio/" target="_blank">ondecomernorio.com/padaria-viriato-gourmet</a></td><td>18/08/2026</td><td>Perfil, endereço, produto — sem preço atual do frango inteiro</td></tr>
+          <tr><td>Padaria Viriato Gourmet — iFood</td><td><a href="https://www.ifood.com.br/delivery/rio-de-janeiro-rj/restaurante-e-padaria-viriato-gourmet-catete/e150b358-4fd2-408a-a901-708e9666f5b3" target="_blank">ifood.com.br/viriato-gourmet</a></td><td>18/08/2026</td><td>R$35,90 (prato de filé grelhado, histórico, não é frango inteiro)</td></tr>
+          <tr><td>Princesa Supermercados — Guiato</td><td><a href="http://www.guiato.com.br/Lojas/Rio-de-Janeiro/Supermercados-Princesa-Rua-do-Catete/v-f7223627" target="_blank">guiato.com.br/princesa-catete</a></td><td>18/08/2026</td><td>Endereço confirmado (Rua do Catete, 120), venda de frango assado não confirmada</td></tr>
+          <tr><td>Boteco Sport Bar — site oficial</td><td><a href="https://botecosportbar.com.br/" target="_blank">botecosportbar.com.br</a></td><td>18/08/2026</td><td>Cardápio geral — frango assado não localizado como item específico</td></tr>
+          <tr><td>Confeitaria Santo Amaro — Tripadvisor</td><td><a href="https://www.tripadvisor.com.br/ShowUserReviews-g303506-d6949439-r759453549-Confeitaria_Santo_Amaro-Rio_de_Janeiro_State_of_Rio_de_Janeiro.html" target="_blank">tripadvisor.com.br/confeitaria-santo-amaro</a></td><td>18/08/2026</td><td>Relato de frango assado de rotisseria aos fins de semana, R$41,90 histórico (~1 ano)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Consumo Local — Análise Gerencial Frango Assado · Gerado localmente · Dados: CurvaABC (6 períodos, sem data) + pesquisa externa 18/08/2026
+</footer>
+
+<script>
+// ---- DADOS (extraídos das 6 planilhas CurvaABC, sem invenção) ----
+const inteiro = [
+  {periodo:1, qtd:610,  valor:24290.84, peso:1.600},
+  {periodo:2, qtd:524,  valor:20844.30, peso:1.600},
+  {periodo:3, qtd:436,  valor:17330.36, peso:1.600},
+  {periodo:4, qtd:550,  valor:21867.08, peso:1.600},
+  {periodo:5, qtd:130,  valor:5173.67,  peso:1.600},
+  {periodo:6, qtd:2283, valor:90816.97, peso:1.600},
+];
+const metade = [
+  {periodo:1, qtd:75,  valor:1492.62},
+  {periodo:2, qtd:62,  valor:1233.91},
+  {periodo:3, qtd:42,  valor:835.45},
+  {periodo:4, qtd:122, valor:2432.89},
+  {periodo:5, qtd:1,   valor:19.95},
+  {periodo:6, qtd:303, valor:6034.77},
+];
+
+const fmtBRL = n => n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
+function fillTable(id, arr){
+  const tbody = document.getElementById(id);
+  tbody.innerHTML = arr.map(r => `
+    <tr>
+      <td>Período ${r.periodo}</td>
+      <td>${r.qtd.toLocaleString('pt-BR')}</td>
+      <td>${fmtBRL(r.valor)}</td>
+      <td>${fmtBRL(r.valor/r.qtd)}</td>
+      <td>${r.peso ? r.peso.toFixed(3)+' kg' : (0.5).toFixed(3)+' kg'}</td>
+    </tr>`).join('');
+}
+fillTable('tabelaInteiro', inteiro);
+fillTable('tabelaMetade', metade);
+
+function maiorMenor(arr, campo){
+  const maior = arr.reduce((a,b)=> b[campo]>a[campo]?b:a);
+  const menor = arr.reduce((a,b)=> b[campo]<a[campo]?b:a);
+  return {maior, menor};
+}
+
+const mmInteiroQtd = maiorMenor(inteiro, 'qtd');
+document.getElementById('maiorPeriodoInteiro').textContent = `Período ${mmInteiroQtd.maior.periodo} (${mmInteiroQtd.maior.qtd.toLocaleString('pt-BR')} un)`;
+document.getElementById('menorPeriodoInteiro').textContent = `Período ${mmInteiroQtd.menor.periodo} (${mmInteiroQtd.menor.qtd.toLocaleString('pt-BR')} un)`;
+
+const mmMetadeQtd = maiorMenor(metade, 'qtd');
+document.getElementById('maiorPeriodoMetade').textContent = `Período ${mmMetadeQtd.maior.periodo} (${mmMetadeQtd.maior.qtd.toLocaleString('pt-BR')} un)`;
+document.getElementById('menorPeriodoMetade').textContent = `Período ${mmMetadeQtd.menor.periodo} (${mmMetadeQtd.menor.qtd.toLocaleString('pt-BR')} un)`;
+
+const receitaTotalPorPeriodo = inteiro.map((r,i)=>({periodo:r.periodo, total:r.valor + metade[i].valor}));
+const mmTotal = maiorMenor(receitaTotalPorPeriodo, 'total');
+document.getElementById('maiorPeriodoTotal').textContent = `Período ${mmTotal.maior.periodo} (${fmtBRL(mmTotal.maior.total)})`;
+document.getElementById('menorPeriodoTotal').textContent = `Período ${mmTotal.menor.periodo} (${fmtBRL(mmTotal.menor.total)})`;
+
+const variacao = ((mmTotal.maior.total - mmTotal.menor.total) / mmTotal.menor.total * 100).toFixed(0);
+document.getElementById('leituraFactual').textContent =
+  `O período ${mmTotal.maior.periodo} teve a maior receita somada (${fmtBRL(mmTotal.maior.total)}) e o período ${mmTotal.menor.periodo} a menor (${fmtBRL(mmTotal.menor.total)}) — variação de ${variacao}% entre eles. Sem identificação de mês, não é possível atribuir causa (sazonalidade, promoção, dia da semana etc.) a essa diferença.`;
+
+const ORANGE = '#ff5a1f';
+const ORANGE2 = '#ff8a3d';
+const RED = '#e0342a';
+const GRIDCOLOR = 'rgba(255,255,255,0.06)';
+const TEXTCOLOR = '#b8a89e';
+
+Chart.defaults.color = TEXTCOLOR;
+Chart.defaults.font.family = "-apple-system, 'Segoe UI', sans-serif";
+
+new Chart(document.getElementById('chartInteiroQtd'), {
+  type:'bar',
+  data:{
+    labels: inteiro.map(r=>'Período '+r.periodo),
+    datasets:[{label:'Quantidade vendida (un)', data:inteiro.map(r=>r.qtd), backgroundColor:ORANGE, borderRadius:6}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{grid:{color:GRIDCOLOR}}, y:{grid:{color:GRIDCOLOR}}},
+    plugins:{legend:{display:false}}}
+});
+
+new Chart(document.getElementById('chartMetadeQtd'), {
+  type:'bar',
+  data:{
+    labels: metade.map(r=>'Período '+r.periodo),
+    datasets:[{label:'Quantidade vendida (un)', data:metade.map(r=>r.qtd), backgroundColor:ORANGE2, borderRadius:6}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{grid:{color:GRIDCOLOR}}, y:{grid:{color:GRIDCOLOR}}},
+    plugins:{legend:{display:false}}}
+});
+
+new Chart(document.getElementById('chartReceita'), {
+  type:'line',
+  data:{
+    labels: inteiro.map(r=>'Período '+r.periodo),
+    datasets:[
+      {label:'Receita Inteiro (9366)', data:inteiro.map(r=>r.valor), borderColor:ORANGE, backgroundColor:'rgba(255,90,31,.15)', fill:true, tension:.3},
+      {label:'Receita Metade (9521)', data:metade.map(r=>r.valor), borderColor:RED, backgroundColor:'rgba(224,52,42,.12)', fill:true, tension:.3},
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{grid:{color:GRIDCOLOR}}, y:{grid:{color:GRIDCOLOR}}},
+    plugins:{legend:{labels:{color:'#f5ece7'}}}}
+});
+
+const totalInteiro = inteiro.reduce((s,r)=>s+r.valor,0);
+const totalMetade = metade.reduce((s,r)=>s+r.valor,0);
+const totalGeral = totalInteiro + totalMetade;
+document.getElementById('partInteiro').textContent = ((totalInteiro/totalGeral)*100).toFixed(1)+'%';
+document.getElementById('partMetade').textContent = ((totalMetade/totalGeral)*100).toFixed(1)+'%';
+
+// ---- NAVEGAÇÃO ----
+function gotoTab(target){
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+  const navBtn = document.querySelector(`#nav button[data-target="${target}"]`);
+  if(navBtn) navBtn.classList.add('active');
+  const sec = document.getElementById(target);
+  if(sec){ sec.classList.add('active'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+}
+document.querySelectorAll('#nav button').forEach(btn=>{
+  btn.addEventListener('click', ()=> gotoTab(btn.dataset.target));
+});
+
+// ---- BEAM CIRCLE: posicionamento orbital + navegação ----
+(function(){
+  const beam = document.getElementById('beam');
+  if(!beam) return;
+  const radiusByRing = {1: 0.5, 2: 0.39, 3: 0.27}; // fração do raio do beam
+
+  function layout(){
+    const size = beam.clientWidth;
+    const center = size/2;
+    beam.querySelectorAll('.orbit-point').forEach(pt=>{
+      const ring = pt.dataset.ring;
+      const angleDeg = parseFloat(pt.dataset.angle);
+      const r = center * radiusByRing[ring];
+      const rad = (angleDeg - 90) * Math.PI/180;
+      const x = center + r*Math.cos(rad);
+      const y = center + r*Math.sin(rad);
+      pt.style.left = x + 'px';
+      pt.style.top = y + 'px';
+      pt.style.transform = 'translate(-50%,-50%)';
+    });
+  }
+  layout();
+  window.addEventListener('resize', layout);
+})();
+
+// ---- ACORDEÃO: fecha os outros ao abrir um novo dentro do mesmo card (opcional, leve) ----
+document.querySelectorAll('.explain').forEach(d=>{
+  d.addEventListener('toggle', ()=>{});
+});
+</script>
+
+</body>
+</html>

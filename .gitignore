@@ -1,0 +1,9 @@
+# Dados internos sensíveis - NUNCA versionar (venda de toda a loja, não só frango)
+COMPARATIVO DE VENDA/
+
+# Arquivos temporários do Excel
+~$*.xlsx
+
+# SO
+.DS_Store
+Thumbs.db
