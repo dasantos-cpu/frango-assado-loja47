@@ -82,7 +82,7 @@
     box-shadow:0 4px 14px rgba(255,90,31,.35);
   }
   main{padding:24px;max-width:1200px;margin:0 auto;}
-  section{display:none;animation:fade .25s ease;}
+  section{display:none;animation:fade .25s ease;scroll-margin-top:110px;}
   section.active{display:block;}
   @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
   @media(prefers-reduced-motion: reduce){
@@ -568,7 +568,7 @@
             <div class="explain-row"><div class="k">O que é</div><div class="v">Valor médio efetivamente identificado nas seis bases analisadas.</div></div>
             <div class="explain-row"><div class="k">De onde veio</div><div class="v">Planilhas CurvaABC — código 9366, coluna "Valor R$" e coluna "Quantidade".</div></div>
             <div class="explain-row"><div class="k">Como foi calculado</div><div class="v">Valor total vendido ÷ quantidade registrada, em cada período e no total.</div></div>
-            <div class="explain-row"><div class="k">O que significa</div><div class="v">O preço praticado ficou estável (39,75 a 39,82) nos 6 períodos — não houve reajuste relevante detectável nessa janela.</div></div>
+            <div class="explain-row"><div class="k">O que significa</div><div class="v">É o preço médio único da base consolidada — não há série temporal disponível pra saber se houve reajuste ao longo do tempo.</div></div>
             <div class="explain-row"><div class="k">Status</div><div class="v"><span class="tag confirmado">CONFIRMADO PELA BASE ANALISADA</span></div></div>
           </div>
         </details>
@@ -656,7 +656,7 @@
         <div class="status-compare">
           <div class="block confirmado"><div class="l">Planilha (médio)</div><div class="v">R$ 19,92</div></div>
         </div>
-        <p class="info-note">Peso médio inferido da planilha: 0,500 kg — bate exatamente com o rótulo "500G", consistente nos 6 períodos. Diferente do código 9366, aqui não há divergência entre rótulo e cálculo.</p>
+        <p class="info-note">Peso médio inferido da planilha: 0,500 kg — bate exatamente com o rótulo "500G". Diferente do código 9366, aqui não há divergência entre rótulo e cálculo.</p>
 
         <details class="explain">
           <summary>Entenda</summary>
@@ -830,7 +830,7 @@
     </div>
 
     <div class="card" style="margin-top:16px;">
-      <div class="explain-row"><div class="k">O dado mostra</div><div class="v">Preço de venda estável (~R$39,78) e simulações de resultado bruto entre R$17,78 e R$20,58/unidade, a depender da premissa de custo usada.</div></div>
+      <div class="explain-row"><div class="k">O dado mostra</div><div class="v">Preço de venda médio de ~R$39,78 na base consolidada e simulações de resultado bruto entre R$17,78 e R$20,58/unidade, a depender da premissa de custo usada.</div></div>
       <div class="explain-row" style="margin-top:8px;"><div class="k">O que ainda não sabemos</div><div class="v">O custo oficial de aquisição do frango — sem ele, não existe margem real, só simulação.</div></div>
       <div class="explain-row" style="margin-top:8px;"><div class="k">Próxima validação necessária</div><div class="v">Obter nota fiscal / histórico de compra junto à Fazenda das Antas para substituir a simulação por custo confirmado.</div></div>
     </div>
@@ -922,7 +922,7 @@
       <table>
         <tbody>
           <tr><td>Abate 1º trimestre 2026</td><td>1,71 bilhão de cabeças de frango — alta de 3,6% vs 1º tri/2025</td></tr>
-          <tr><td>Produção de carcaças</td><td>3,73 milhões de toneladas — alta de 7,0% vs 1º tri/2025</td></tr>
+          <tr><td>Produção de carcaças</td><td>3,73 milhões de toneladas — alta de 6,9% vs 1º tri/2025</td></tr>
         </tbody>
       </table>
       <p class="info-note" style="margin-top:8px;">Fonte: <a href="https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/47166-brasil-registra-alta-no-abate-de-bovinos-frangos-e-suinos-no-1-trimestre-em-comparacao-com-2025" target="_blank">IBGE — Pesquisa Trimestral do Abate de Animais</a>, divulgado 06/2026. Volume nacional de abate — não indica preço nem custo específico da Loja 47/Fazenda das Antas.</p>
@@ -948,7 +948,7 @@
           <tr><td>Rendimento de carcaça injetada</td><td>88,5%</td></tr>
         </tbody>
       </table>
-      <p class="info-note" style="margin-top:8px;">Fonte: <a href="https://cloud.cnpgc.embrapa.br/sac/2012/07/19/449-qual-e-a-forma-correta-de-calcular-o-rendimento-de-carcaca/" target="_blank">Embrapa — coeficientes técnicos de rendimento de carcaça</a>. Referência de indústria/abate — não é o rendimento do frango já assado na rotisseria (ver aba Conhecimento).</p>
+      <p class="info-note" style="margin-top:8px;">Fonte: <a href="https://www.embrapa.br/documents/1355242/0/Tabela+Drawback+Frangos+-+032022.pdf" target="_blank">Embrapa — coeficientes técnicos de rendimento de carcaça</a>. Referência de indústria/abate — não é o rendimento do frango já assado na rotisseria (ver aba Conhecimento).</p>
     </div>
 
     <div class="callout bad" style="margin-top:16px;">
@@ -1069,7 +1069,7 @@
           <p style="color:var(--text-muted);font-size:.85rem;">Tonelagem ÷ quantidade do código 9366 na base consolidada dá 1,6kg — não 1,8kg como informado. Evidência: colunas Tonelagem/Quantidade, CurvaABC_20260807115141.xlsx.</p>
         </div>
         <div>
-          <b style="font-size:.85rem;color:#fff;">Preço de venda estável e confirmado</b>
+          <b style="font-size:.85rem;color:#fff;">Preço de venda médio confirmado</b>
           <p style="color:var(--text-muted);font-size:.85rem;">R$39,78 (inteiro) e R$19,92 (metade), calculados direto da base consolidada — sem soma manual de arquivos.</p>
         </div>
         <div>
@@ -1156,13 +1156,13 @@
     <h2>Conhecimento <span class="sub">Base de conhecimento — pesquisa externa de apoio ao agente, não substitui dados internos da Loja 47</span></h2>
 
     <div class="card">
-      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Rotisseria</h3>
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Rotisseria <span class="hist-badge" style="color:var(--gray);background:rgba(107,92,84,.16);border-color:var(--border);">REFERÊNCIA SETORIAL — NÃO É DADO DA LOJA 47</span></h3>
       <p style="color:var(--text-muted);font-size:.85rem;">Frango assado, lasanhas, escondidinhos, estrogonofe, feijoada e parmegiana são os pratos tradicionais que lideram vendas de rotisseria de supermercado no Brasil. A categoria de prontos-para-consumo (cozidos/assados) está em expansão, com fabricantes (ex: Seara) ampliando distribuição para rotisserias.</p>
       <p class="info-note">Fonte: <a href="https://www.supervarejo.com.br/varejo/rotisseria-oferece-praticidade-aos-consumidores-e-se-transforma-em-importante-estrategia-de-fidelizacao-no-supermercado" target="_blank">SuperVarejo</a>, consultado 18/08/2026.</p>
     </div>
 
     <div class="card" style="margin-top:16px;">
-      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Yield / Quebra (cocção)</h3>
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Yield / Quebra (cocção) <span class="hist-badge" style="color:var(--gray);background:rgba(107,92,84,.16);border-color:var(--border);">REFERÊNCIA SETORIAL — NÃO É DADO DA LOJA 47</span></h3>
       <p style="color:var(--text-muted);font-size:.85rem;">Referências gerais de perda de peso na cocção do frango: de 10kg de frango cru com osso, sobram ~6-7kg assado — perda de 30-40%. Método de cocção muda a perda: forno convencional ~30,6%, fritura ~23,0%, cozimento em água ~20,0%, micro-ondas ~52,4% (maior perda).</p>
       <div class="callout warn" style="margin-top:8px;">
         Esses números são referência genérica de nutrição/gastronomia — <b>não são medição da Loja 47</b>. Comparar com a "Tonelagem" da própria base (3.652,80 pro inteiro) exigiria saber o peso do frango cru antes de assar, que não está na planilha.
@@ -1171,7 +1171,7 @@
     </div>
 
     <div class="card" style="margin-top:16px;">
-      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Precificação</h3>
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Precificação <span class="hist-badge" style="color:var(--gray);background:rgba(107,92,84,.16);border-color:var(--border);">REFERÊNCIA SETORIAL — NÃO É DADO DA LOJA 47</span></h3>
       <p style="color:var(--text-muted);font-size:.85rem;">Referência de mercado (fontes especializadas em máquinas de assar frango, não específico de rede grande): margem saudável de 30-50% no setor; custo médio informado na literatura entre R$13-17/unidade; preço final entre R$30-50 a depender da região.</p>
       <div class="callout warn" style="margin-top:8px;">
         Loja 47 pratica R$39,78 (inteiro) — dentro da faixa de mercado citada, mas sem custo oficial confirmado não dá pra calcular a margem real da loja e comparar com esses 30-50% (ver aba Custos).
@@ -1180,13 +1180,13 @@
     </div>
 
     <div class="card" style="margin-top:16px;">
-      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Exposição / Frescor</h3>
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Exposição / Frescor <span class="hist-badge" style="color:var(--gray);background:rgba(107,92,84,.16);border-color:var(--border);">REFERÊNCIA SETORIAL — NÃO É DADO DA LOJA 47</span></h3>
       <p style="color:var(--text-muted);font-size:.85rem;">Alimento cozido/assado deve ficar no máximo ~2h em temperatura ambiente antes de risco bacteriano relevante (Clostridium perfringens, Bacillus cereus proliferam entre 15°C-50°C). Frango assado refrigerado tem prazo de consumo seguro de 3-4 dias.</p>
       <p class="info-note">Fonte: <a href="https://www.uai.com.br/curiosidades/2026/03/03/o-tempo-maximo-que-o-frango-assado-pode-ficar-na-geladeira-antes-de-ressecar-e-desenvolver-bacterias-segundo-especialistas/" target="_blank">UAI Notícias</a>, <a href="https://www.medis.pt/mais-medis/dieta-e-nutricao/boas-praticas-de-seguranca-alimentar/" target="_blank">Medis — boas práticas</a>, consultado 18/08/2026.</p>
     </div>
 
     <div class="card" style="margin-top:16px;">
-      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Comportamento de Consumo</h3>
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Comportamento de Consumo <span class="hist-badge" style="color:var(--gray);background:rgba(107,92,84,.16);border-color:var(--border);">REFERÊNCIA SETORIAL — NÃO É DADO DA LOJA 47</span></h3>
       <p style="color:var(--text-muted);font-size:.85rem;">55,6% dos consumidores preferem comprar frango em supermercados (vs 35,4% em frigoríficos). No ponto de venda, os atributos mais valorizados são conservação adequada do alimento (29,05%) e higiene das instalações (27,97%). Rotisseria atende demanda crescente por praticidade/conveniência.</p>
       <p class="info-note">Fonte: pesquisas acadêmicas de perfil de consumidor de frango (Porto Alegre/João Pessoa) e <a href="https://www.supervarejo.com.br/varejo/rotisseria-amplia-o-potencial-de-vendas-do-churrasco-no-dia-dos-pais" target="_blank">SuperVarejo</a>, consultado 18/08/2026.</p>
     </div>
@@ -1211,7 +1211,7 @@
           <tr><td>Notícias Agrícolas / CEPEA-ESALQ</td><td><a href="https://www.noticiasagricolas.com.br/cotacoes/frango/precos-do-frango-congelado-cepea-esalq" target="_blank">precos-do-frango-congelado-cepea-esalq</a></td><td>18/08/2026</td><td>Cotação frango congelado R$5,11/kg</td><td><span class="tag confirmado">ALTA — CEPEA/ESALQ</span></td></tr>
           <tr><td>ABPA — Relatório Anual 2026</td><td><a href="https://abpa-br.org/noticias/abpa-lanca-relatorio-anual-2026-com-dados-oficiais-da-avicultura-e-da-suinocultura-do-brasil/" target="_blank">abpa-br.org</a></td><td>18/08/2026</td><td>Produção/consumo/exportação nacional de frango 2025-2026</td><td><span class="tag confirmado">ALTA — entidade setorial oficial</span></td></tr>
           <tr><td>IBGE — Pesquisa Trimestral do Abate de Animais</td><td><a href="https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/47166-brasil-registra-alta-no-abate-de-bovinos-frangos-e-suinos-no-1-trimestre-em-comparacao-com-2025" target="_blank">agenciadenoticias.ibge.gov.br</a></td><td>18/08/2026</td><td>Abate nacional de frangos 1º tri/2026</td><td><span class="tag confirmado">ALTA — órgão oficial de estatística</span></td></tr>
-          <tr><td>Embrapa — Rendimento de carcaça</td><td><a href="https://cloud.cnpgc.embrapa.br/sac/2012/07/19/449-qual-e-a-forma-correta-de-calcular-o-rendimento-de-carcaca/" target="_blank">cnpgc.embrapa.br</a></td><td>18/08/2026</td><td>Coeficientes técnicos de rendimento de carcaça (75%/88,5%)</td><td><span class="tag confirmado">ALTA — instituto de pesquisa público</span></td></tr>
+          <tr><td>Embrapa — Tabela Drawback Frangos</td><td><a href="https://www.embrapa.br/documents/1355242/0/Tabela+Drawback+Frangos+-+032022.pdf" target="_blank">embrapa.br (PDF)</a></td><td>18/08/2026</td><td>Coeficientes técnicos de rendimento de carcaça (75%/88,5%)</td><td><span class="tag confirmado">ALTA — instituto de pesquisa público</span></td></tr>
           <tr><td>maquinasdeassarfrango.com.br</td><td><a href="https://maquinasdeassarfrango.com.br/preco-do-frango-assado-lucro-2026/" target="_blank">maquinasdeassarfrango.com.br</a></td><td>18/08/2026</td><td>Faixa de margem/custo de mercado (referência de nicho)</td><td><span class="tag informado">MÉDIA — fonte comercial, não órgão oficial</span></td></tr>
           <tr><td>SuperVarejo</td><td><a href="https://www.supervarejo.com.br/varejo/rotisseria-oferece-praticidade-aos-consumidores-e-se-transforma-em-importante-estrategia-de-fidelizacao-no-supermercado" target="_blank">supervarejo.com.br</a></td><td>18/08/2026</td><td>Comportamento de consumo em rotisseria</td><td><span class="tag informado">MÉDIA — veículo especializado do setor</span></td></tr>
           <tr><td>Braseiro Machadão — Rappi</td><td><a href="https://www.rappi.com.br/restaurantes/900642929-braseiro-machadao-frango" target="_blank">rappi.com.br/braseiro-machadao</a></td><td>18/08/2026</td><td>Cardápio/preços, sem item comparável</td><td><span class="tag naoencontrado">BAIXA — sem produto comparável</span></td></tr>
