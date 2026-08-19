@@ -421,13 +421,14 @@
   <button data-target="visao-geral" class="active">1. Visão Geral</button>
   <button data-target="inteiro">2. Frango Inteiro</button>
   <button data-target="metade">3. Meio Frango</button>
-  <button data-target="evolucao">4. Evolução de Vendas</button>
+  <button data-target="evolucao">4. Vendas &amp; Perdas</button>
   <button data-target="custos">5. Custos</button>
   <button data-target="fornecedor">6. Fornecedor</button>
   <button data-target="mercado">7. Mercado Brasileiro</button>
   <button data-target="concorrentes">8. Concorrentes</button>
-  <button data-target="oportunidades">9. Oportunidades</button>
-  <button data-target="fontes">10. Fontes</button>
+  <button data-target="oportunidades">9. Análises do Agente</button>
+  <button data-target="conhecimento">10. Conhecimento</button>
+  <button data-target="fontes">11. Fontes</button>
 </nav>
 
 <main>
@@ -437,39 +438,39 @@
     <div class="section-block">
       <h2>O que estamos analisando? <span class="sub">Frango Assado do Consumo Local, Loja 47 — Catete · Códigos 9366 (inteiro) e 9521 (metade)</span></h2>
       <p style="color:var(--text-muted);font-size:.9rem;max-width:760px;">
-        Esta página analisa os dois produtos de frango assado vendidos na Loja 47: <b>Frango Assado Inteiro (9366)</b> e <b>Frango Assado Metade (9521)</b>. Os dados vêm de 6 planilhas de venda (CurvaABC) e de pesquisa externa sobre fornecedor, mercado e concorrência.
+        Esta página analisa os dois produtos de frango assado vendidos na Loja 47: <b>Frango Assado Inteiro (9366)</b> e <b>Frango Assado Metade (9521)</b>. Fonte única de venda: a base consolidada <code>CurvaABC_20260807115141.xlsx</code> (pasta Venda Total) — 704 produtos, a mais completa entre as bases disponíveis.
       </p>
 
       <div class="callout warn">
-        As 6 planilhas <b>CurvaABC</b> não têm coluna de mês/data nem metadado de período. Tratadas aqui como <b>Período 1 a 6</b> (ordem de arquivo) — <b>Período 1 não é necessariamente Janeiro</b>, nem qualquer outro mês. Não foi identificado a qual mês cada planilha corresponde.
+        <b>Venda Total — base consolidada disponível.</b> Essa base não possui campo de data, então não afirmamos "desde a inauguração até agosto" — apenas que é o acumulado mais completo encontrado até agora. Quando bases mensais com período identificado existirem, a aba "Vendas &amp; Perdas" passará a mostrar evolução temporal real.
       </div>
 
       <div class="grid grid-4" style="margin-top:16px;">
         <div class="card kpi">
           <div class="label">Venda total (9366+9521)</div>
-          <div class="value orange">R$ 192.372,81</div>
-          <div class="note">soma 6 períodos <span class="tag confirmado">CONFIRMADO</span></div>
+          <div class="value orange" id="kpiVendaTotal">—</div>
+          <div class="note">base consolidada <span class="tag confirmado">CONFIRMADO</span></div>
           <details class="explain">
             <summary>Entenda</summary>
             <div class="explain-body">
-              <div class="explain-row"><div class="k">O que é</div><div class="v">Soma de tudo que os dois produtos (inteiro + metade) faturaram nos 6 períodos disponíveis nas planilhas.</div></div>
-              <div class="explain-row"><div class="k">Como foi calculado</div><div class="v">Soma da coluna "Valor R$" do código 9366 e do código 9521 em cada uma das 6 planilhas CurvaABC.</div></div>
-              <div class="explain-row"><div class="k">Limitação</div><div class="v">Os 6 períodos não têm mês identificado — não sabemos se cobrem um ano inteiro, meio ano, ou períodos não contínuos.</div></div>
-              <div class="explain-row"><div class="k">Fonte</div><div class="v">6 arquivos CurvaABC_*.xlsx, pasta COMPARATIVO DE VENDA.</div></div>
+              <div class="explain-row"><div class="k">O que é</div><div class="v">Soma de tudo que os dois produtos (inteiro + metade) faturaram na base consolidada de venda total.</div></div>
+              <div class="explain-row"><div class="k">Como foi calculado</div><div class="v">Valor R$ do código 9366 + Valor R$ do código 9521, direto da planilha, sem soma de outros arquivos.</div></div>
+              <div class="explain-row"><div class="k">Limitação</div><div class="v">A base não tem campo de data — não sabemos o intervalo de tempo exato que esse acumulado cobre.</div></div>
+              <div class="explain-row"><div class="k">Fonte</div><div class="v">CurvaABC_20260807115141.xlsx, pasta Venda Total.</div></div>
             </div>
           </details>
         </div>
         <div class="card kpi">
           <div class="label">Unidades vendidas</div>
-          <div class="value">5.138 un</div>
-          <div class="note">4.533 inteiros + 605 metades <span class="tag confirmado">CONFIRMADO</span></div>
+          <div class="value" id="kpiUnidades">—</div>
+          <div class="note" id="kpiUnidadesNote">— <span class="tag confirmado">CONFIRMADO</span></div>
           <details class="explain">
             <summary>Entenda</summary>
             <div class="explain-body">
-              <div class="explain-row"><div class="k">O que é</div><div class="v">Soma de todas as unidades vendidas dos dois códigos, somando os registros dos 6 períodos disponíveis.</div></div>
-              <div class="explain-row"><div class="k">Como foi calculado</div><div class="v">Soma da coluna "Quantidade" do código 9366 (4.533) + código 9521 (605) nas 6 planilhas.</div></div>
-              <div class="explain-row"><div class="k">Limitação</div><div class="v">Não representa necessariamente um período fixo de tempo (ex: 1 ano) — os 6 períodos ainda não têm data confirmada.</div></div>
-              <div class="explain-row"><div class="k">Fonte</div><div class="v">6 arquivos CurvaABC_*.xlsx.</div></div>
+              <div class="explain-row"><div class="k">O que é</div><div class="v">Soma de todas as unidades vendidas dos dois códigos na base consolidada.</div></div>
+              <div class="explain-row"><div class="k">Como foi calculado</div><div class="v">Coluna "Quantidade" do código 9366 + código 9521, direto da planilha Venda Total.</div></div>
+              <div class="explain-row"><div class="k">Limitação</div><div class="v">Não sabemos o período de tempo que essas unidades representam (sem data na base).</div></div>
+              <div class="explain-row"><div class="k">Fonte</div><div class="v">CurvaABC_20260807115141.xlsx.</div></div>
             </div>
           </details>
         </div>
@@ -480,8 +481,8 @@
           <details class="explain">
             <summary>Entenda</summary>
             <div class="explain-body">
-              <div class="explain-row"><div class="k">O que é</div><div class="v">Valor médio efetivamente identificado nas seis bases analisadas para o Frango Inteiro (9366).</div></div>
-              <div class="explain-row"><div class="k">Como foi calculado</div><div class="v">Valor total vendido (R$180.323,22) ÷ quantidade total registrada (4.533 un).</div></div>
+              <div class="explain-row"><div class="k">O que é</div><div class="v">Valor médio identificado na base consolidada para o Frango Inteiro (9366).</div></div>
+              <div class="explain-row"><div class="k">Como foi calculado</div><div class="v">Valor total vendido (R$90.816,97) ÷ quantidade total registrada (2.283 un).</div></div>
               <div class="explain-row"><div class="k">Comparação</div><div class="v">Valor informado anteriormente: R$39,00. Diferença: +R$0,78 (~+2%).</div></div>
               <div class="explain-row"><div class="k">Status</div><div class="v"><span class="tag confirmado">CONFIRMADO PELA BASE ANALISADA</span></div></div>
             </div>
@@ -494,8 +495,8 @@
           <details class="explain">
             <summary>Entenda</summary>
             <div class="explain-body">
-              <div class="explain-row"><div class="k">O que é</div><div class="v">Indicador de que não existe, em nenhuma planilha disponível, o custo oficial de compra do frango — logo margem real não pode ser calculada, só estimada.</div></div>
-              <div class="explain-row"><div class="k">Limitação</div><div class="v">Ver aba Custos para as estimativas possíveis com os valores informados pelo usuário (não confirmados).</div></div>
+              <div class="explain-row"><div class="k">O que é</div><div class="v">Indicador de que não existe custo oficial de compra do frango em nenhuma base — logo margem real não pode ser calculada, só simulada.</div></div>
+              <div class="explain-row"><div class="k">Limitação</div><div class="v">A base tem coluna "Margem %" (9366=0,19 / 9521=0,15) mas a escala exata está pendente de validação — ver aba Custos.</div></div>
             </div>
           </details>
         </div>
@@ -507,11 +508,11 @@
       <div class="grid grid-2">
         <div>
           <b style="font-size:.85rem;color:#fff;">O que é sólido</b>
-          <p style="color:var(--text-muted);font-size:.83rem;">Quantidade, receita e preço médio dos 2 códigos, extraídos diretamente das 6 planilhas — sem cálculo especulativo.</p>
+          <p style="color:var(--text-muted);font-size:.83rem;">Quantidade, receita, preço médio, tonelagem, perda registrada e representação no faturamento — extraídos diretamente da base consolidada (Venda Total), sem soma manual de outras planilhas.</p>
         </div>
         <div>
           <b style="font-size:.85rem;color:#fff;">O que é frágil</b>
-          <p style="color:var(--text-muted);font-size:.83rem;">Identificação de mês dos períodos, custo oficial, peso físico real, e preço atual de concorrentes — nenhum confirmado ainda.</p>
+          <p style="color:var(--text-muted);font-size:.83rem;">Janela de tempo do acumulado, custo oficial, peso físico real, escala exata da coluna Margem %, e preço atual de concorrentes — nenhum confirmado ainda.</p>
         </div>
       </div>
     </div>
@@ -519,15 +520,22 @@
     <div class="section-block card">
       <h2 style="font-size:1.05rem;">O que os dados confirmam até aqui</h2>
       <table>
-        <thead><tr><th>Item</th><th>Informado</th><th>Encontrado na planilha</th><th>Status</th></tr></thead>
+        <thead><tr><th>Item</th><th>Informado</th><th>Encontrado na base consolidada</th><th>Status</th></tr></thead>
         <tbody>
-          <tr><td>Preço de venda — Inteiro (9366)</td><td>R$ 39,00</td><td>R$ 39,78 (médio, 6 períodos)</td><td><span class="tag informado">divergência pequena ~2%</span></td></tr>
+          <tr><td>Preço de venda — Inteiro (9366)</td><td>R$ 39,00</td><td>R$ 39,78 (médio)</td><td><span class="tag informado">divergência pequena ~2%</span></td></tr>
           <tr><td>Peso do frango inteiro</td><td>1,800 kg</td><td>1,600 kg inferido (tonelagem ÷ quantidade)</td><td><span class="tag naoencontrado">divergência real</span></td></tr>
-          <tr><td>Custo por frango</td><td>R$ 22,00</td><td>sem coluna de custo na planilha</td><td><span class="tag naoencontrado">NÃO ENCONTRADO</span></td></tr>
-          <tr><td>Referência R$/kg insumo</td><td>R$ 12,00/kg</td><td>sem coluna de custo na planilha</td><td><span class="tag naoencontrado">NÃO ENCONTRADO</span></td></tr>
-          <tr><td>Preço de venda — Metade (9521)</td><td>—</td><td>R$ 19,92 (médio, 6 períodos)</td><td><span class="tag confirmado">CONFIRMADO</span></td></tr>
+          <tr><td>Custo por frango</td><td>R$ 22,00</td><td>sem coluna de custo de compra na planilha</td><td><span class="tag naoencontrado">NÃO ENCONTRADO</span></td></tr>
+          <tr><td>Referência R$/kg insumo</td><td>R$ 12,00/kg</td><td>sem coluna de custo de compra na planilha</td><td><span class="tag naoencontrado">NÃO ENCONTRADO</span></td></tr>
+          <tr><td>Preço de venda — Metade (9521)</td><td>—</td><td>R$ 19,92 (médio)</td><td><span class="tag confirmado">CONFIRMADO</span></td></tr>
+          <tr><td>Valor de perda registrado (9366)</td><td>—</td><td>R$ 1.700,72</td><td><span class="tag confirmado">CONFIRMADO</span></td></tr>
+          <tr><td>Valor de perda registrado (9521)</td><td>—</td><td>R$ 6,11</td><td><span class="tag confirmado">CONFIRMADO</span></td></tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="section-block card">
+      <h3 style="margin-top:0;font-size:.95rem;">Contexto externo resumido <span class="tag informado" style="margin-left:8px;">macro, não específico da loja</span></h3>
+      <p style="color:var(--text-muted);font-size:.83rem;">Brasil produziu 15,29 milhões de toneladas de frango em 2025, com projeção de 16,15 milhões (+5%) em 2026 (ABPA). Abate nacional cresceu 3,6% no 1º tri/2026 (IBGE). Cotação de mercado atacado: R$5,11-5,22/kg (CEPEA/ESALQ, jul-ago/2026). Nenhum desses números é preço ou custo específico da Fazenda das Antas ou da Loja 47 — servem só de pano de fundo setorial. Detalhes completos na aba Mercado Brasileiro.</p>
     </div>
   </section>
 
@@ -542,11 +550,12 @@
       <div class="product-info">
         <span class="product-code">CÓD. 9366</span>
         <h3 class="product-name">FRANGO ASSADO INTEIRO</h3>
-        <p class="product-desc">Descrição na planilha: "FRANGO ASSADO P/VIAGEM 1KG" — rótulo "1KG" não interpretado como peso físico real, ver nota abaixo.</p>
+        <p class="product-desc">Descrição na planilha: "FRANGO ASSADO P/VIAGEM 1KG" — rótulo "1KG" não interpretado como peso físico real, ver nota abaixo. Fonte: base consolidada Venda Total.</p>
         <div class="product-kpis">
-          <div class="mini"><div class="l">Qtd total</div><div class="v">4.533 un</div></div>
-          <div class="mini"><div class="l">Receita total</div><div class="v">R$ 180.323,22</div></div>
+          <div class="mini"><div class="l">Qtd total</div><div class="v">2.283 un</div></div>
+          <div class="mini"><div class="l">Receita total</div><div class="v">R$ 90.816,97</div></div>
           <div class="mini"><div class="l">Preço médio</div><div class="v">R$ 39,78</div></div>
+          <div class="mini"><div class="l">Tonelagem</div><div class="v">3.652,80</div></div>
         </div>
         <div class="status-compare">
           <div class="block informado"><div class="l">Informado</div><div class="v">R$ 39,00</div></div>
@@ -581,24 +590,47 @@
 
         <div class="grid grid-2" style="margin-top:14px;">
           <div class="mini" style="background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:10px;padding:8px 14px;">
-            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">Maior período</div>
-            <div class="v" id="maiorPeriodoInteiro" style="font-size:1.05rem;font-weight:700;color:#fff;">—</div>
+            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">Valor de perda registrado</div>
+            <div class="v" style="font-size:1.05rem;font-weight:700;color:#fff;">R$ 1.700,72</div>
           </div>
           <div class="mini" style="background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:10px;padding:8px 14px;">
-            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">Menor período</div>
-            <div class="v" id="menorPeriodoInteiro" style="font-size:1.05rem;font-weight:700;color:#fff;">—</div>
+            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">% perda sobre venda</div>
+            <div class="v" id="percPerdaInteiro" style="font-size:1.05rem;font-weight:700;color:#fff;">—</div>
           </div>
         </div>
+
+        <details class="explain">
+          <summary>Entenda margem e representação</summary>
+          <div class="explain-body">
+            <div class="explain-row"><div class="k">Margem % registrada</div><div class="v">0,19 na base. Comparando com outros produtos da mesma planilha (ex: Salada Bar 0,39, Café da Manhã 0,41 — todos entre 0,3 e 0,5, coerente com a linha TOTAL geral = 37,88%), a coluna parece ser uma fração (0,19 ≈ 19%). <b>Isso é inferência por comparação, não documentação confirmada</b> — interpretação percentual pendente de validação com quem gerou o relatório.</div></div>
+            <div class="explain-row"><div class="k">Margem Objetiva % registrada</div><div class="v">50,00 na base — essa coluna já aparece em escala percentual convencional (50 = 50%). Não comparar diretamente com Margem % até a escala desta ser validada.</div></div>
+            <div class="explain-row"><div class="k">Representação Valor % — validação matemática</div><div class="v">Planilha registra 1,53. Conferido: R$90.816,97 ÷ R$5.940.062,90 (venda total da base) × 100 = 1,53% — <b>bate exatamente</b>. Confirma que é participação no faturamento total da base Consumo Local (não só do frango).</div></div>
+          </div>
+        </details>
       </div>
     </div>
 
-    <div class="card" style="margin-bottom:16px;">
-      <div class="chart-wrap"><canvas id="chartInteiroQtd"></canvas></div>
-    </div>
     <div class="card">
+      <h3 style="margin-top:0;font-size:.95rem;">Todas as colunas da base — código 9366</h3>
       <table>
-        <thead><tr><th>Período</th><th>Qtd (un)</th><th>Valor (R$)</th><th>Preço médio/un</th><th>Peso médio inferido da planilha</th></tr></thead>
-        <tbody id="tabelaInteiro"></tbody>
+        <tbody>
+          <tr><th>Código</th><td>9366</td></tr>
+          <tr><th>Descrição</th><td>FRANGO ASSADO P/VIAGEM 1KG</td></tr>
+          <tr><th>Categoria</th><td>CONSUMO LOCAL</td></tr>
+          <tr><th>Subcategoria</th><td>PRODUTOS DE SALAO</td></tr>
+          <tr><th>Segmento</th><td>GRELHADOS</td></tr>
+          <tr><th>Quantidade</th><td>2.283,00</td></tr>
+          <tr><th>Tonelagem</th><td>3.652,80</td></tr>
+          <tr><th>Valor R$</th><td>R$ 90.816,97</td></tr>
+          <tr><th>Preço médio (calculado)</th><td>R$ 39,78</td></tr>
+          <tr><th>Reajuste Ajustado</th><td>R$ 16.804,26</td></tr>
+          <tr><th>Margem %</th><td>0,19 <span class="tag estimado">interpretação pendente</span></td></tr>
+          <tr><th>Valor Perda R$</th><td>R$ 1.700,72</td></tr>
+          <tr><th>R$ Médio do KG Vendido</th><td>R$ 24,86</td></tr>
+          <tr><th>Representação Valor %</th><td>1,53% <span class="tag confirmado">validado matematicamente</span></td></tr>
+          <tr><th>Valor Verba R$</th><td>R$ 0,00</td></tr>
+          <tr><th>Margem Objetiva %</th><td>50,00%</td></tr>
+        </tbody>
       </table>
     </div>
   </section>
@@ -614,11 +646,12 @@
       <div class="product-info">
         <span class="product-code">CÓD. 9521</span>
         <h3 class="product-name">FRANGO ASSADO METADE</h3>
-        <p class="product-desc">Descrição na planilha: "FRANGO ASSADO METADE P/VIAGEM 500G".</p>
+        <p class="product-desc">Descrição na planilha: "FRANGO ASSADO METADE P/VIAGEM 500G". Fonte: base consolidada Venda Total.</p>
         <div class="product-kpis">
-          <div class="mini"><div class="l">Qtd total</div><div class="v">605 un</div></div>
-          <div class="mini"><div class="l">Receita total</div><div class="v">R$ 12.049,59</div></div>
+          <div class="mini"><div class="l">Qtd total</div><div class="v">303 un</div></div>
+          <div class="mini"><div class="l">Receita total</div><div class="v">R$ 6.034,77</div></div>
           <div class="mini"><div class="l">Preço médio</div><div class="v">R$ 19,92</div></div>
+          <div class="mini"><div class="l">Tonelagem</div><div class="v">151,50</div></div>
         </div>
         <div class="status-compare">
           <div class="block confirmado"><div class="l">Planilha (médio)</div><div class="v">R$ 19,92</div></div>
@@ -637,66 +670,114 @@
 
         <div class="grid grid-2" style="margin-top:14px;">
           <div class="mini" style="background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:10px;padding:8px 14px;">
-            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">Maior período</div>
-            <div class="v" id="maiorPeriodoMetade" style="font-size:1.05rem;font-weight:700;color:#fff;">—</div>
+            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">Valor de perda registrado</div>
+            <div class="v" style="font-size:1.05rem;font-weight:700;color:#fff;">R$ 6,11</div>
           </div>
           <div class="mini" style="background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:10px;padding:8px 14px;">
-            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">Menor período</div>
-            <div class="v" id="menorPeriodoMetade" style="font-size:1.05rem;font-weight:700;color:#fff;">—</div>
+            <div class="l" style="font-size:.65rem;color:var(--text-muted2);text-transform:uppercase;">% perda sobre venda</div>
+            <div class="v" id="percPerdaMetade" style="font-size:1.05rem;font-weight:700;color:#fff;">—</div>
           </div>
         </div>
+
+        <details class="explain">
+          <summary>Entenda margem e representação</summary>
+          <div class="explain-body">
+            <div class="explain-row"><div class="k">Margem % registrada</div><div class="v">0,15 na base — mesma lógica do 9366: comparável a outros produtos na faixa 0,3–0,5, mas escala não documentada oficialmente. Interpretação percentual pendente de validação.</div></div>
+            <div class="explain-row"><div class="k">Margem Objetiva % registrada</div><div class="v">50,00 na base — igual ao inteiro.</div></div>
+            <div class="explain-row"><div class="k">Representação Valor % — validação matemática</div><div class="v">Planilha registra 0,10. Conferido: R$6.034,77 ÷ R$5.940.062,90 × 100 = 0,10% — <b>bate</b>. Confirma participação no faturamento total da base.</div></div>
+          </div>
+        </details>
       </div>
     </div>
 
-    <div class="card" style="margin-bottom:16px;">
-      <div class="chart-wrap"><canvas id="chartMetadeQtd"></canvas></div>
-    </div>
     <div class="card">
+      <h3 style="margin-top:0;font-size:.95rem;">Todas as colunas da base — código 9521</h3>
       <table>
-        <thead><tr><th>Período</th><th>Qtd (un)</th><th>Valor (R$)</th><th>Preço médio/un</th><th>Peso médio inferido da planilha</th></tr></thead>
-        <tbody id="tabelaMetade"></tbody>
+        <tbody>
+          <tr><th>Código</th><td>9521</td></tr>
+          <tr><th>Descrição</th><td>FRANGO ASSADO METADE P/VIAGEM 500G</td></tr>
+          <tr><th>Categoria</th><td>CONSUMO LOCAL</td></tr>
+          <tr><th>Subcategoria</th><td>PRODUTOS DE SALAO</td></tr>
+          <tr><th>Segmento</th><td>GRELHADOS</td></tr>
+          <tr><th>Quantidade</th><td>303,00</td></tr>
+          <tr><th>Tonelagem</th><td>151,50</td></tr>
+          <tr><th>Valor R$</th><td>R$ 6.034,77</td></tr>
+          <tr><th>Preço médio (calculado)</th><td>R$ 19,92</td></tr>
+          <tr><th>Reajuste Ajustado</th><td>R$ 922,81</td></tr>
+          <tr><th>Margem %</th><td>0,15 <span class="tag estimado">interpretação pendente</span></td></tr>
+          <tr><th>Valor Perda R$</th><td>R$ 6,11</td></tr>
+          <tr><th>R$ Médio do KG Vendido</th><td>R$ 39,83</td></tr>
+          <tr><th>Representação Valor %</th><td>0,10% <span class="tag confirmado">validado matematicamente</span></td></tr>
+          <tr><th>Valor Verba R$</th><td>R$ 0,00</td></tr>
+          <tr><th>Margem Objetiva %</th><td>50,00%</td></tr>
+        </tbody>
       </table>
     </div>
   </section>
 
-  <!-- 4. EVOLUÇÃO -->
+  <!-- 4. VENDAS & PERDAS -->
   <section id="evolucao">
-    <h2>Evolução de Vendas <span class="sub">Inteiro × Metade, todos os períodos</span></h2>
+    <h2>Vendas &amp; Perdas <span class="sub">Inteiro × Metade — base consolidada (Venda Total)</span></h2>
 
     <div class="card" style="margin-bottom:16px;">
-      <b style="font-size:.85rem;color:#fff;">O que este gráfico mostra?</b>
-      <p style="color:var(--text-muted);font-size:.85rem;margin:6px 0 0;">Comparação do faturamento dos códigos 9366 (inteiro) e 9521 (metade) ao longo dos seis períodos encontrados nas planilhas CurvaABC.</p>
-      <div class="callout bad" style="margin-top:10px;">
-        <b>Importante:</b> as planilhas não permitem atualmente identificar esses períodos como janeiro, fevereiro etc. <b>Período 1 ≠ Janeiro confirmado.</b> Qualquer leitura de sazonalidade é especulativa até essa identificação existir.
-      </div>
+      <h3 style="margin-top:0;font-size:.95rem;">Histórico Mensal</h3>
+      <p style="color:var(--text-muted);font-size:.85rem;">Aguardando bases mensais identificadas.</p>
+      <p style="color:var(--text-muted2);font-size:.78rem;">Quando os próximos relatórios vierem com período/data claramente identificados, esta área passará a mostrar evolução mensal, tendências e comparação entre períodos.</p>
     </div>
 
-    <div class="card" style="margin-bottom:16px;">
-      <div class="chart-wrap"><canvas id="chartReceita"></canvas></div>
-    </div>
-
-    <div class="grid grid-4">
-      <div class="card kpi">
-        <div class="label">Participação Inteiro no faturamento</div>
-        <div class="value orange" id="partInteiro">—</div>
+    <div class="grid grid-2">
+      <div class="card">
+        <b style="font-size:.85rem;color:#fff;">Venda total: Inteiro × Metade</b>
+        <div class="chart-wrap" style="height:220px;margin-top:10px;"><canvas id="chartVenda"></canvas></div>
       </div>
-      <div class="card kpi">
-        <div class="label">Participação Metade no faturamento</div>
-        <div class="value orange" id="partMetade">—</div>
+      <div class="card">
+        <b style="font-size:.85rem;color:#fff;">Unidades: Inteiro × Metade</b>
+        <div class="chart-wrap" style="height:220px;margin-top:10px;"><canvas id="chartUnidades"></canvas></div>
       </div>
-      <div class="card kpi">
-        <div class="label">Maior período (receita total)</div>
-        <div class="value" id="maiorPeriodoTotal" style="font-size:1.2rem;">—</div>
+      <div class="card">
+        <b style="font-size:.85rem;color:#fff;">Participação no faturamento (Inteiro + Metade)</b>
+        <div class="chart-wrap" style="height:220px;margin-top:10px;"><canvas id="chartParticipacao"></canvas></div>
       </div>
-      <div class="card kpi">
-        <div class="label">Menor período (receita total)</div>
-        <div class="value" id="menorPeriodoTotal" style="font-size:1.2rem;">—</div>
+      <div class="card">
+        <b style="font-size:.85rem;color:#fff;">Valor de perda: Inteiro × Metade</b>
+        <div class="chart-wrap" style="height:220px;margin-top:10px;"><canvas id="chartPerda"></canvas></div>
       </div>
     </div>
 
     <div class="card" style="margin-top:16px;">
-      <b style="font-size:.85rem;color:#fff;">Leitura factual (sem conclusão causal)</b>
-      <p style="color:var(--text-muted);font-size:.83rem;margin:6px 0 0;" id="leituraFactual">—</p>
+      <b style="font-size:.85rem;color:#fff;">Venda × Perda (por produto)</b>
+      <div class="chart-wrap" style="margin-top:10px;"><canvas id="chartVendaPerda"></canvas></div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <b style="font-size:.85rem;color:#fff;">Participação dos produtos no faturamento total da base Consumo Local</b>
+      <p class="info-note">Validado matematicamente: Representação Valor % da planilha bate com Venda produto ÷ Venda total da base (R$5.940.062,90).</p>
+      <div class="chart-wrap" style="height:220px;margin-top:10px;"><canvas id="chartRepresentacao"></canvas></div>
+    </div>
+
+    <div class="grid grid-4" style="margin-top:16px;">
+      <div class="card kpi">
+        <div class="label">Participação Inteiro no faturamento (frango)</div>
+        <div class="value orange" id="partInteiro">—</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Participação Metade no faturamento (frango)</div>
+        <div class="value orange" id="partMetade">—</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Participação Inteiro em unidades</div>
+        <div class="value" id="partUnInteiro" style="font-size:1.2rem;">—</div>
+      </div>
+      <div class="card kpi">
+        <div class="label">Participação Metade em unidades</div>
+        <div class="value" id="partUnMetade" style="font-size:1.2rem;">—</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <b style="font-size:.85rem;color:#fff;">% de perda sobre a venda registrada</b>
+      <p style="color:var(--text-muted);font-size:.83rem;margin:6px 0 0;" id="leituraPerda">—</p>
+      <p class="info-note">Cálculo: Valor Perda ÷ Valor Venda × 100. É uma relação matemática produzida por esta análise — não é chamada aqui de "índice operacional oficial de perda" porque essa definição não existe na documentação da base.</p>
     </div>
   </section>
 
@@ -822,7 +903,9 @@
     <div class="callout warn" style="margin-top:16px;">
       Cotações abaixo são do <b>frango atacado/resfriado/congelado</b> — isso <b>NÃO É</b> o frango assado pronto vendido ao consumidor.
     </div>
+
     <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">CEPEA/ESALQ — Camada: Atacado (frango resfriado/congelado)</h3>
       <table>
         <thead><tr><th>Data</th><th>Tipo</th><th>R$/kg</th><th>Fonte</th></tr></thead>
         <tbody>
@@ -832,6 +915,44 @@
         </tbody>
       </table>
       <p class="info-note" style="margin-top:10px;">Série cobre apenas Jul-Ago/2026 — <b>SÉRIE INCOMPLETA</b> frente ao intervalo pedido (Janeiro/2026 → hoje). Meses sem cotação encontrada não foram preenchidos artificialmente.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">IBGE — Camada: Matéria-prima (abate nacional)</h3>
+      <table>
+        <tbody>
+          <tr><td>Abate 1º trimestre 2026</td><td>1,71 bilhão de cabeças de frango — alta de 3,6% vs 1º tri/2025</td></tr>
+          <tr><td>Produção de carcaças</td><td>3,73 milhões de toneladas — alta de 7,0% vs 1º tri/2025</td></tr>
+        </tbody>
+      </table>
+      <p class="info-note" style="margin-top:8px;">Fonte: <a href="https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/47166-brasil-registra-alta-no-abate-de-bovinos-frangos-e-suinos-no-1-trimestre-em-comparacao-com-2025" target="_blank">IBGE — Pesquisa Trimestral do Abate de Animais</a>, divulgado 06/2026. Volume nacional de abate — não indica preço nem custo específico da Loja 47/Fazenda das Antas.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">ABPA — Camada: Matéria-prima / setor (produção e exportação nacional)</h3>
+      <table>
+        <tbody>
+          <tr><td>Produção de carne de frango — 2025 (Relatório Anual 2026)</td><td>15,289 milhões de toneladas</td></tr>
+          <tr><td>Projeção de produção — 2026</td><td>16,15 milhões de toneladas (~+5%)</td></tr>
+          <tr><td>Projeção de consumo per capita — 2026</td><td>~48 kg/habitante/ano</td></tr>
+        </tbody>
+      </table>
+      <p class="info-note" style="margin-top:8px;">Fonte: <a href="https://abpa-br.org/noticias/abpa-lanca-relatorio-anual-2026-com-dados-oficiais-da-avicultura-e-da-suinocultura-do-brasil/" target="_blank">ABPA — Relatório Anual 2026</a>. Dado setorial nacional — contexto de tendência, não substitui preço/custo do fornecedor da loja.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Embrapa — Camada: Conversão matéria-prima → carcaça (rendimento técnico)</h3>
+      <table>
+        <tbody>
+          <tr><td>Equivalência carcaça/frango vivo</td><td>75,0%</td></tr>
+          <tr><td>Rendimento de carcaça injetada</td><td>88,5%</td></tr>
+        </tbody>
+      </table>
+      <p class="info-note" style="margin-top:8px;">Fonte: <a href="https://cloud.cnpgc.embrapa.br/sac/2012/07/19/449-qual-e-a-forma-correta-de-calcular-o-rendimento-de-carcaca/" target="_blank">Embrapa — coeficientes técnicos de rendimento de carcaça</a>. Referência de indústria/abate — não é o rendimento do frango já assado na rotisseria (ver aba Conhecimento).</p>
+    </div>
+
+    <div class="callout bad" style="margin-top:16px;">
+      <b>Camada "produto assado" (frango assado pronto vendido ao consumidor): nenhuma fonte pública nacional (ABPA/CEPEA/IBGE/Embrapa) publica preço ou cotação para esse produto especificamente</b> — só existe para matéria-prima e atacado. O único dado de "produto assado" desta análise é o preço médio da própria Loja 47 (R$39,78/R$19,92), sem referência externa direta pra comparar.
     </div>
   </section>
 
@@ -936,35 +1057,75 @@
     </div>
   </section>
 
-  <!-- 9. OPORTUNIDADES -->
+  <!-- 9. ANÁLISES DO AGENTE -->
   <section id="oportunidades">
-    <h2>O que os dados estão dizendo? <span class="sub">Apenas fatos sustentados pelos dados encontrados</span></h2>
-    <div class="grid grid-2">
-      <div class="card">
-        <b>Peso real menor que o informado</b>
-        <p style="color:var(--text-muted);font-size:.85rem;">Tonelagem ÷ quantidade do código 9366 dá 1,6kg médio real em todos os 6 períodos, consistentemente — não 1,8kg como informado. Evidência: coluna Tonelagem/Quantidade de todas as 6 planilhas CurvaABC.</p>
-      </div>
-      <div class="card">
-        <b>Custo de compra não está documentado em nenhuma fonte local</b>
-        <p style="color:var(--text-muted);font-size:.85rem;">Nem CurvaABC nem Checklist têm coluna de custo. Toda margem calculada aqui é estimativa, não fato. Evidência: ausência de coluna nas 15 colunas mapeadas de cada planilha.</p>
-      </div>
-      <div class="card">
-        <b>Preço de venda praticado é consistente</b>
-        <p style="color:var(--text-muted);font-size:.85rem;">R$39,75 a R$39,82 nos 6 períodos (variação de 0,2%) — preço não mudou de forma relevante no intervalo coberto pelas planilhas. Evidência: coluna Valor R$ ÷ Quantidade, todos os períodos.</p>
-      </div>
-      <div class="card">
-        <b>Falta de dado para avaliar concorrência atual</b>
-        <p style="color:var(--text-muted);font-size:.85rem;">4 estabelecimentos pesquisados — apenas 2 com venda de frango assado confirmada (Viriato, Santo Amaro) — e nenhum com preço 2026 confirmado. Qualquer decisão de preço frente à concorrência fica sem base sólida até nova pesquisa (idealmente via apps de delivery diretamente, não busca textual).</p>
+    <h2>Análises do Agente <span class="sub">Agente Consumo Local — Frango Assado</span></h2>
+
+    <div class="card" style="margin-bottom:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--ok);">Achados confirmados</h3>
+      <div class="grid grid-2">
+        <div>
+          <b style="font-size:.85rem;color:#fff;">Peso inferido menor que o informado</b>
+          <p style="color:var(--text-muted);font-size:.85rem;">Tonelagem ÷ quantidade do código 9366 na base consolidada dá 1,6kg — não 1,8kg como informado. Evidência: colunas Tonelagem/Quantidade, CurvaABC_20260807115141.xlsx.</p>
+        </div>
+        <div>
+          <b style="font-size:.85rem;color:#fff;">Preço de venda estável e confirmado</b>
+          <p style="color:var(--text-muted);font-size:.85rem;">R$39,78 (inteiro) e R$19,92 (metade), calculados direto da base consolidada — sem soma manual de arquivos.</p>
+        </div>
+        <div>
+          <b style="font-size:.85rem;color:#fff;">Representação Valor % validada matematicamente</b>
+          <p style="color:var(--text-muted);font-size:.85rem;">1,53% (9366) e 0,10% (9521) batem exatamente com Venda produto ÷ Venda total da base (R$5.940.062,90).</p>
+        </div>
+        <div>
+          <b style="font-size:.85rem;color:#fff;">Perda registrada é baixa proporcionalmente</b>
+          <p style="color:var(--text-muted);font-size:.85rem;">R$1.700,72 (9366) e R$6,11 (9521) — ver % exato na aba Vendas &amp; Perdas.</p>
+        </div>
       </div>
     </div>
 
-    <div class="card" style="margin-top:20px;">
-      <h3 style="margin-top:0;font-size:1rem;">O que ainda precisamos descobrir?</h3>
-      <p style="color:var(--text-muted);font-size:.82rem;margin-top:0;">Isso transforma falta de informação em plano de investigação — não em conclusão.</p>
+    <div class="card" style="margin-bottom:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--warn);">Alertas</h3>
+      <div class="grid grid-2">
+        <div>
+          <b style="font-size:.85rem;color:#fff;">Custo de compra não documentado</b>
+          <p style="color:var(--text-muted);font-size:.85rem;">Nenhuma base (CurvaABC, Checklist) tem coluna de custo de aquisição. Toda margem calculada é simulação, não fato.</p>
+        </div>
+        <div>
+          <b style="font-size:.85rem;color:#fff;">Escala da coluna Margem % não documentada</b>
+          <p style="color:var(--text-muted);font-size:.85rem;">0,19 (9366) e 0,15 (9521) — interpretação de 19%/15% é inferência por comparação com outros produtos, não confirmação oficial.</p>
+        </div>
+        <div>
+          <b style="font-size:.85rem;color:#fff;">Sem identificação temporal do acumulado</b>
+          <p style="color:var(--text-muted);font-size:.85rem;">A base Venda Total não tem data — não sabemos se cobre 1 mês, 6 meses ou desde a abertura da loja.</p>
+        </div>
+        <div>
+          <b style="font-size:.85rem;color:#fff;">Concorrência sem preço atual</b>
+          <p style="color:var(--text-muted);font-size:.85rem;">4 estabelecimentos pesquisados, só 2 com venda confirmada (Viriato, Santo Amaro), nenhum com preço 2026 confirmado.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Oportunidades de investigação</h3>
+      <p style="color:var(--text-muted);font-size:.82rem;">Pontos que merecem apuração — não são recomendação definitiva.</p>
+      <ul style="color:var(--text-muted);font-size:.85rem;padding-left:18px;">
+        <li>Confirmar com quem gera o relatório CurvaABC a escala real da coluna Margem %</li>
+        <li>Obter bases mensais com período identificado para habilitar análise de tendência</li>
+        <li>Checar preço atual dos 4 concorrentes direto nos apps de delivery</li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--text-muted2);">Hipóteses <span class="tag estimado">HIPÓTESE</span></h3>
+      <p style="color:var(--text-muted);font-size:.85rem;">Hipótese: a divergência entre peso informado (1,8kg) e peso inferido (1,6kg) pode vir de o "1KG" da descrição ser nominal/comercial, não peso real médio de abate — não confirmado, precisa validação operacional.</p>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <h3 style="margin-top:0;font-size:1rem;">Dados necessários</h3>
       <div class="discover-list">
         <div class="item"><span class="n">1</span>Custo oficial de compra junto à Fazenda das Antas</div>
-        <div class="item"><span class="n">2</span>Histórico de custo desde janeiro/2026</div>
-        <div class="item"><span class="n">3</span>Identificação dos meses reais das seis planilhas CurvaABC</div>
+        <div class="item"><span class="n">2</span>Confirmação da escala real da coluna Margem %</div>
+        <div class="item"><span class="n">3</span>Identificação de data/período do acumulado Venda Total</div>
         <div class="item"><span class="n">4</span>Confirmação do peso físico oficial (1,6kg inferido vs 1,8kg informado)</div>
         <div class="item"><span class="n">5</span>Preço atual — Padaria Viriato Gourmet</div>
         <div class="item"><span class="n">6</span>Preço atual — Princesa Supermercados (Catete)</div>
@@ -974,26 +1135,92 @@
         <div class="item"><span class="n">10</span>Composição/acompanhamentos dos concorrentes (farofa, batata, molho)</div>
       </div>
     </div>
+
+    <div class="card">
+      <h3 style="margin-top:0;font-size:.9rem;">Sugestões do agente</h3>
+      <div class="grid grid-2">
+        <div>
+          <b style="font-size:.85rem;color:#fff;">Validar escala de Margem % com quem opera o sistema de origem</b>
+          <p style="color:var(--text-muted);font-size:.83rem;">Por quê: sem isso, qualquer leitura de rentabilidade do frango pode estar 100x errada pra mais ou pra menos.</p>
+        </div>
+        <div>
+          <b style="font-size:.85rem;color:#fff;">Priorizar obtenção do custo oficial antes de decisão de preço</b>
+          <p style="color:var(--text-muted);font-size:.83rem;">Por quê: toda simulação de resultado bruto hoje depende de premissa informada, não confirmada.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- 10. FONTES -->
+  <!-- 10. CONHECIMENTO -->
+  <section id="conhecimento">
+    <h2>Conhecimento <span class="sub">Base de conhecimento — pesquisa externa de apoio ao agente, não substitui dados internos da Loja 47</span></h2>
+
+    <div class="card">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Rotisseria</h3>
+      <p style="color:var(--text-muted);font-size:.85rem;">Frango assado, lasanhas, escondidinhos, estrogonofe, feijoada e parmegiana são os pratos tradicionais que lideram vendas de rotisseria de supermercado no Brasil. A categoria de prontos-para-consumo (cozidos/assados) está em expansão, com fabricantes (ex: Seara) ampliando distribuição para rotisserias.</p>
+      <p class="info-note">Fonte: <a href="https://www.supervarejo.com.br/varejo/rotisseria-oferece-praticidade-aos-consumidores-e-se-transforma-em-importante-estrategia-de-fidelizacao-no-supermercado" target="_blank">SuperVarejo</a>, consultado 18/08/2026.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Yield / Quebra (cocção)</h3>
+      <p style="color:var(--text-muted);font-size:.85rem;">Referências gerais de perda de peso na cocção do frango: de 10kg de frango cru com osso, sobram ~6-7kg assado — perda de 30-40%. Método de cocção muda a perda: forno convencional ~30,6%, fritura ~23,0%, cozimento em água ~20,0%, micro-ondas ~52,4% (maior perda).</p>
+      <div class="callout warn" style="margin-top:8px;">
+        Esses números são referência genérica de nutrição/gastronomia — <b>não são medição da Loja 47</b>. Comparar com a "Tonelagem" da própria base (3.652,80 pro inteiro) exigiria saber o peso do frango cru antes de assar, que não está na planilha.
+      </div>
+      <p class="info-note">Fontes: <a href="https://nutridateoriaapratica.com.br/como-calcular-rendimento-de-alimentos-crus-e-cozidos/" target="_blank">Nutri da Teoria à Prática</a>, <a href="https://blog.praticabr.com/afinal-como-calcular-o-indice-de-coccao-dos-alimentos" target="_blank">Prática BR — índice de cocção</a>, consultado 18/08/2026.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Precificação</h3>
+      <p style="color:var(--text-muted);font-size:.85rem;">Referência de mercado (fontes especializadas em máquinas de assar frango, não específico de rede grande): margem saudável de 30-50% no setor; custo médio informado na literatura entre R$13-17/unidade; preço final entre R$30-50 a depender da região.</p>
+      <div class="callout warn" style="margin-top:8px;">
+        Loja 47 pratica R$39,78 (inteiro) — dentro da faixa de mercado citada, mas sem custo oficial confirmado não dá pra calcular a margem real da loja e comparar com esses 30-50% (ver aba Custos).
+      </div>
+      <p class="info-note">Fonte: <a href="https://maquinasdeassarfrango.com.br/preco-do-frango-assado-lucro-2026/" target="_blank">maquinasdeassarfrango.com.br</a>, consultado 18/08/2026 — fonte comercial de nicho, não é orgão de pesquisa oficial.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Exposição / Frescor</h3>
+      <p style="color:var(--text-muted);font-size:.85rem;">Alimento cozido/assado deve ficar no máximo ~2h em temperatura ambiente antes de risco bacteriano relevante (Clostridium perfringens, Bacillus cereus proliferam entre 15°C-50°C). Frango assado refrigerado tem prazo de consumo seguro de 3-4 dias.</p>
+      <p class="info-note">Fonte: <a href="https://www.uai.com.br/curiosidades/2026/03/03/o-tempo-maximo-que-o-frango-assado-pode-ficar-na-geladeira-antes-de-ressecar-e-desenvolver-bacterias-segundo-especialistas/" target="_blank">UAI Notícias</a>, <a href="https://www.medis.pt/mais-medis/dieta-e-nutricao/boas-praticas-de-seguranca-alimentar/" target="_blank">Medis — boas práticas</a>, consultado 18/08/2026.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Comportamento de Consumo</h3>
+      <p style="color:var(--text-muted);font-size:.85rem;">55,6% dos consumidores preferem comprar frango em supermercados (vs 35,4% em frigoríficos). No ponto de venda, os atributos mais valorizados são conservação adequada do alimento (29,05%) e higiene das instalações (27,97%). Rotisseria atende demanda crescente por praticidade/conveniência.</p>
+      <p class="info-note">Fonte: pesquisas acadêmicas de perfil de consumidor de frango (Porto Alegre/João Pessoa) e <a href="https://www.supervarejo.com.br/varejo/rotisseria-amplia-o-potencial-de-vendas-do-churrasco-no-dia-dos-pais" target="_blank">SuperVarejo</a>, consultado 18/08/2026.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Boas Práticas</h3>
+      <p style="color:var(--text-muted);font-size:.85rem;">Manter alimento assado longe de variação de temperatura contínua na vitrine; controle de tempo de exposição é ponto crítico de segurança alimentar reconhecido — mesmo em balcão de venda onde controle contínuo de temperatura nem sempre é possível.</p>
+      <p class="info-note">Fonte: <a href="https://www.dgav.pt/wp-content/uploads/2025/09/8_DGAV_ET_Seguranca_Alimentos-Manutencao-cadeia-frio-GAOA.pdf" target="_blank">DGAV — Segurança dos Alimentos</a>, consultado 18/08/2026.</p>
+    </div>
+  </section>
+
+  <!-- 11. FONTES -->
   <section id="fontes">
     <h2>Fontes <span class="sub">Toda informação externa com origem rastreável</span></h2>
     <div class="card">
       <table>
-        <thead><tr><th>Fonte</th><th>URL</th><th>Data</th><th>Informação</th></tr></thead>
+        <thead><tr><th>Fonte</th><th>URL</th><th>Data</th><th>Informação</th><th>Qualidade da evidência</th></tr></thead>
         <tbody>
-          <tr><td>Fazenda das Antas — site oficial</td><td><a href="https://fazenda-antas.com.br/" target="_blank">fazenda-antas.com.br</a></td><td>18/08/2026</td><td>Perfil do fornecedor</td></tr>
-          <tr><td>Fazenda das Antas — Quem somos</td><td><a href="https://fazenda-antas.com.br/quem-somos/" target="_blank">fazenda-antas.com.br/quem-somos</a></td><td>18/08/2026</td><td>Histórico desde 1924/1992</td></tr>
-          <tr><td>Notícias Agrícolas / CEPEA-ESALQ</td><td><a href="https://www.noticiasagricolas.com.br/cotacoes/frango/precos-do-frango-resfriado-cepea-esalq" target="_blank">precos-do-frango-resfriado-cepea-esalq</a></td><td>18/08/2026</td><td>Cotação frango resfriado R$5,19–5,22/kg</td></tr>
-          <tr><td>Notícias Agrícolas / CEPEA-ESALQ</td><td><a href="https://www.noticiasagricolas.com.br/cotacoes/frango/precos-do-frango-congelado-cepea-esalq" target="_blank">precos-do-frango-congelado-cepea-esalq</a></td><td>18/08/2026</td><td>Cotação frango congelado R$5,11/kg</td></tr>
-          <tr><td>Braseiro Machadão — Rappi</td><td><a href="https://www.rappi.com.br/restaurantes/900642929-braseiro-machadao-frango" target="_blank">rappi.com.br/braseiro-machadao</a></td><td>18/08/2026</td><td>Cardápio/preços, sem item comparável</td></tr>
-          <tr><td>Pesquisa de bairro frango assado (histórica)</td><td>ver observação</td><td>2022 (desatualizado)</td><td>Preços Catete/Flamengo/Glória/Laranjeiras — usado só como referência histórica</td></tr>
-          <tr><td>Padaria Viriato Gourmet — Onde Comer no Rio</td><td><a href="https://ondecomernorio.com/padaria-viriato-gourmet-o-frango-assado-mais-gostoso-do-rio/" target="_blank">ondecomernorio.com/padaria-viriato-gourmet</a></td><td>18/08/2026</td><td>Perfil, endereço, produto — sem preço atual do frango inteiro</td></tr>
-          <tr><td>Padaria Viriato Gourmet — iFood</td><td><a href="https://www.ifood.com.br/delivery/rio-de-janeiro-rj/restaurante-e-padaria-viriato-gourmet-catete/e150b358-4fd2-408a-a901-708e9666f5b3" target="_blank">ifood.com.br/viriato-gourmet</a></td><td>18/08/2026</td><td>R$35,90 (prato de filé grelhado, histórico, não é frango inteiro)</td></tr>
-          <tr><td>Princesa Supermercados — Guiato</td><td><a href="http://www.guiato.com.br/Lojas/Rio-de-Janeiro/Supermercados-Princesa-Rua-do-Catete/v-f7223627" target="_blank">guiato.com.br/princesa-catete</a></td><td>18/08/2026</td><td>Endereço confirmado (Rua do Catete, 120), venda de frango assado não confirmada</td></tr>
-          <tr><td>Boteco Sport Bar — site oficial</td><td><a href="https://botecosportbar.com.br/" target="_blank">botecosportbar.com.br</a></td><td>18/08/2026</td><td>Cardápio geral — frango assado não localizado como item específico</td></tr>
-          <tr><td>Confeitaria Santo Amaro — Tripadvisor</td><td><a href="https://www.tripadvisor.com.br/ShowUserReviews-g303506-d6949439-r759453549-Confeitaria_Santo_Amaro-Rio_de_Janeiro_State_of_Rio_de_Janeiro.html" target="_blank">tripadvisor.com.br/confeitaria-santo-amaro</a></td><td>18/08/2026</td><td>Relato de frango assado de rotisseria aos fins de semana, R$41,90 histórico (~1 ano)</td></tr>
+          <tr><td>Fazenda das Antas — site oficial</td><td><a href="https://fazenda-antas.com.br/" target="_blank">fazenda-antas.com.br</a></td><td>18/08/2026</td><td>Perfil do fornecedor</td><td><span class="tag confirmado">ALTA — fonte primária</span></td></tr>
+          <tr><td>Fazenda das Antas — Quem somos</td><td><a href="https://fazenda-antas.com.br/quem-somos/" target="_blank">fazenda-antas.com.br/quem-somos</a></td><td>18/08/2026</td><td>Histórico desde 1924/1992</td><td><span class="tag confirmado">ALTA — fonte primária</span></td></tr>
+          <tr><td>Notícias Agrícolas / CEPEA-ESALQ</td><td><a href="https://www.noticiasagricolas.com.br/cotacoes/frango/precos-do-frango-resfriado-cepea-esalq" target="_blank">precos-do-frango-resfriado-cepea-esalq</a></td><td>18/08/2026</td><td>Cotação frango resfriado R$5,19–5,22/kg</td><td><span class="tag confirmado">ALTA — CEPEA/ESALQ, referência de mercado reconhecida</span></td></tr>
+          <tr><td>Notícias Agrícolas / CEPEA-ESALQ</td><td><a href="https://www.noticiasagricolas.com.br/cotacoes/frango/precos-do-frango-congelado-cepea-esalq" target="_blank">precos-do-frango-congelado-cepea-esalq</a></td><td>18/08/2026</td><td>Cotação frango congelado R$5,11/kg</td><td><span class="tag confirmado">ALTA — CEPEA/ESALQ</span></td></tr>
+          <tr><td>ABPA — Relatório Anual 2026</td><td><a href="https://abpa-br.org/noticias/abpa-lanca-relatorio-anual-2026-com-dados-oficiais-da-avicultura-e-da-suinocultura-do-brasil/" target="_blank">abpa-br.org</a></td><td>18/08/2026</td><td>Produção/consumo/exportação nacional de frango 2025-2026</td><td><span class="tag confirmado">ALTA — entidade setorial oficial</span></td></tr>
+          <tr><td>IBGE — Pesquisa Trimestral do Abate de Animais</td><td><a href="https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/47166-brasil-registra-alta-no-abate-de-bovinos-frangos-e-suinos-no-1-trimestre-em-comparacao-com-2025" target="_blank">agenciadenoticias.ibge.gov.br</a></td><td>18/08/2026</td><td>Abate nacional de frangos 1º tri/2026</td><td><span class="tag confirmado">ALTA — órgão oficial de estatística</span></td></tr>
+          <tr><td>Embrapa — Rendimento de carcaça</td><td><a href="https://cloud.cnpgc.embrapa.br/sac/2012/07/19/449-qual-e-a-forma-correta-de-calcular-o-rendimento-de-carcaca/" target="_blank">cnpgc.embrapa.br</a></td><td>18/08/2026</td><td>Coeficientes técnicos de rendimento de carcaça (75%/88,5%)</td><td><span class="tag confirmado">ALTA — instituto de pesquisa público</span></td></tr>
+          <tr><td>maquinasdeassarfrango.com.br</td><td><a href="https://maquinasdeassarfrango.com.br/preco-do-frango-assado-lucro-2026/" target="_blank">maquinasdeassarfrango.com.br</a></td><td>18/08/2026</td><td>Faixa de margem/custo de mercado (referência de nicho)</td><td><span class="tag informado">MÉDIA — fonte comercial, não órgão oficial</span></td></tr>
+          <tr><td>SuperVarejo</td><td><a href="https://www.supervarejo.com.br/varejo/rotisseria-oferece-praticidade-aos-consumidores-e-se-transforma-em-importante-estrategia-de-fidelizacao-no-supermercado" target="_blank">supervarejo.com.br</a></td><td>18/08/2026</td><td>Comportamento de consumo em rotisseria</td><td><span class="tag informado">MÉDIA — veículo especializado do setor</span></td></tr>
+          <tr><td>Braseiro Machadão — Rappi</td><td><a href="https://www.rappi.com.br/restaurantes/900642929-braseiro-machadao-frango" target="_blank">rappi.com.br/braseiro-machadao</a></td><td>18/08/2026</td><td>Cardápio/preços, sem item comparável</td><td><span class="tag naoencontrado">BAIXA — sem produto comparável</span></td></tr>
+          <tr><td>Pesquisa de bairro frango assado (histórica)</td><td>ver observação</td><td>2022 (desatualizado)</td><td>Preços Catete/Flamengo/Glória/Laranjeiras — usado só como referência histórica</td><td><span class="tag naoencontrado">BAIXA — desatualizado</span></td></tr>
+          <tr><td>Padaria Viriato Gourmet — Onde Comer no Rio</td><td><a href="https://ondecomernorio.com/padaria-viriato-gourmet-o-frango-assado-mais-gostoso-do-rio/" target="_blank">ondecomernorio.com/padaria-viriato-gourmet</a></td><td>18/08/2026</td><td>Perfil, endereço, produto — sem preço atual do frango inteiro</td><td><span class="tag informado">MÉDIA — blog especializado, sem preço atual</span></td></tr>
+          <tr><td>Padaria Viriato Gourmet — iFood</td><td><a href="https://www.ifood.com.br/delivery/rio-de-janeiro-rj/restaurante-e-padaria-viriato-gourmet-catete/e150b358-4fd2-408a-a901-708e9666f5b3" target="_blank">ifood.com.br/viriato-gourmet</a></td><td>18/08/2026</td><td>R$35,90 (prato de filé grelhado, histórico, não é frango inteiro)</td><td><span class="tag naoencontrado">BAIXA — produto diferente, preço histórico</span></td></tr>
+          <tr><td>Princesa Supermercados — Guiato</td><td><a href="http://www.guiato.com.br/Lojas/Rio-de-Janeiro/Supermercados-Princesa-Rua-do-Catete/v-f7223627" target="_blank">guiato.com.br/princesa-catete</a></td><td>18/08/2026</td><td>Endereço confirmado (Rua do Catete, 120), venda de frango assado não confirmada</td><td><span class="tag informado">MÉDIA — endereço confirmado, produto não confirmado</span></td></tr>
+          <tr><td>Boteco Sport Bar — site oficial</td><td><a href="https://botecosportbar.com.br/" target="_blank">botecosportbar.com.br</a></td><td>18/08/2026</td><td>Cardápio geral — frango assado não localizado como item específico</td><td><span class="tag informado">MÉDIA — fonte primária, produto não confirmado</span></td></tr>
+          <tr><td>Confeitaria Santo Amaro — Tripadvisor</td><td><a href="https://www.tripadvisor.com.br/ShowUserReviews-g303506-d6949439-r759453549-Confeitaria_Santo_Amaro-Rio_de_Janeiro_State_of_Rio_de_Janeiro.html" target="_blank">tripadvisor.com.br/confeitaria-santo-amaro</a></td><td>18/08/2026</td><td>Relato de frango assado de rotisseria aos fins de semana, R$41,90 histórico (~1 ano)</td><td><span class="tag informado">MÉDIA — relato de usuário, preço histórico</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -1002,66 +1229,35 @@
 </main>
 
 <footer>
-  Consumo Local — Análise Gerencial Frango Assado · Gerado localmente · Dados: CurvaABC (6 períodos, sem data) + pesquisa externa 18/08/2026
+  Consumo Local — Análise Gerencial Frango Assado · Gerado localmente · Dados: base consolidada Venda Total (CurvaABC_20260807115141.xlsx, sem data) + pesquisa externa 18/08/2026
 </footer>
 
 <script>
-// ---- DADOS (extraídos das 6 planilhas CurvaABC, sem invenção) ----
-const inteiro = [
-  {periodo:1, qtd:610,  valor:24290.84, peso:1.600},
-  {periodo:2, qtd:524,  valor:20844.30, peso:1.600},
-  {periodo:3, qtd:436,  valor:17330.36, peso:1.600},
-  {periodo:4, qtd:550,  valor:21867.08, peso:1.600},
-  {periodo:5, qtd:130,  valor:5173.67,  peso:1.600},
-  {periodo:6, qtd:2283, valor:90816.97, peso:1.600},
-];
-const metade = [
-  {periodo:1, qtd:75,  valor:1492.62},
-  {periodo:2, qtd:62,  valor:1233.91},
-  {periodo:3, qtd:42,  valor:835.45},
-  {periodo:4, qtd:122, valor:2432.89},
-  {periodo:5, qtd:1,   valor:19.95},
-  {periodo:6, qtd:303, valor:6034.77},
-];
+// ---- DADOS (base consolidada Venda Total — CurvaABC_20260807115141.xlsx, sem invenção) ----
+const inteiro = { codigo:'9366', qtd:2283, valor:90816.97, tonelagem:3652.80, perda:1700.72, margemBase:0.19, margemObjetiva:50.00, representacao:1.53 };
+const metade  = { codigo:'9521', qtd:303,  valor:6034.77,  tonelagem:151.50,  perda:6.11,     margemBase:0.15, margemObjetiva:50.00, representacao:0.10 };
+const vendaTotalBase = 5940062.90; // linha TOTAL da base consolidada (todos os produtos, não só frango)
 
 const fmtBRL = n => n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 
-function fillTable(id, arr){
-  const tbody = document.getElementById(id);
-  tbody.innerHTML = arr.map(r => `
-    <tr>
-      <td>Período ${r.periodo}</td>
-      <td>${r.qtd.toLocaleString('pt-BR')}</td>
-      <td>${fmtBRL(r.valor)}</td>
-      <td>${fmtBRL(r.valor/r.qtd)}</td>
-      <td>${r.peso ? r.peso.toFixed(3)+' kg' : (0.5).toFixed(3)+' kg'}</td>
-    </tr>`).join('');
-}
-fillTable('tabelaInteiro', inteiro);
-fillTable('tabelaMetade', metade);
+const vendaTotalFrango = inteiro.valor + metade.valor;
+const unidadesTotal = inteiro.qtd + metade.qtd;
 
-function maiorMenor(arr, campo){
-  const maior = arr.reduce((a,b)=> b[campo]>a[campo]?b:a);
-  const menor = arr.reduce((a,b)=> b[campo]<a[campo]?b:a);
-  return {maior, menor};
-}
+document.getElementById('kpiVendaTotal').textContent = fmtBRL(vendaTotalFrango);
+document.getElementById('kpiUnidades').textContent = unidadesTotal.toLocaleString('pt-BR') + ' un';
+document.getElementById('kpiUnidadesNote').innerHTML = `${inteiro.qtd.toLocaleString('pt-BR')} inteiros + ${metade.qtd.toLocaleString('pt-BR')} metades <span class="tag confirmado">CONFIRMADO</span>`;
 
-const mmInteiroQtd = maiorMenor(inteiro, 'qtd');
-document.getElementById('maiorPeriodoInteiro').textContent = `Período ${mmInteiroQtd.maior.periodo} (${mmInteiroQtd.maior.qtd.toLocaleString('pt-BR')} un)`;
-document.getElementById('menorPeriodoInteiro').textContent = `Período ${mmInteiroQtd.menor.periodo} (${mmInteiroQtd.menor.qtd.toLocaleString('pt-BR')} un)`;
+document.getElementById('percPerdaInteiro').textContent = ((inteiro.perda/inteiro.valor)*100).toFixed(2)+'%';
+document.getElementById('percPerdaMetade').textContent = ((metade.perda/metade.valor)*100).toFixed(2)+'%';
 
-const mmMetadeQtd = maiorMenor(metade, 'qtd');
-document.getElementById('maiorPeriodoMetade').textContent = `Período ${mmMetadeQtd.maior.periodo} (${mmMetadeQtd.maior.qtd.toLocaleString('pt-BR')} un)`;
-document.getElementById('menorPeriodoMetade').textContent = `Período ${mmMetadeQtd.menor.periodo} (${mmMetadeQtd.menor.qtd.toLocaleString('pt-BR')} un)`;
+document.getElementById('partInteiro').textContent = ((inteiro.valor/vendaTotalFrango)*100).toFixed(1)+'%';
+document.getElementById('partMetade').textContent = ((metade.valor/vendaTotalFrango)*100).toFixed(1)+'%';
+document.getElementById('partUnInteiro').textContent = ((inteiro.qtd/unidadesTotal)*100).toFixed(1)+'%';
+document.getElementById('partUnMetade').textContent = ((metade.qtd/unidadesTotal)*100).toFixed(1)+'%';
 
-const receitaTotalPorPeriodo = inteiro.map((r,i)=>({periodo:r.periodo, total:r.valor + metade[i].valor}));
-const mmTotal = maiorMenor(receitaTotalPorPeriodo, 'total');
-document.getElementById('maiorPeriodoTotal').textContent = `Período ${mmTotal.maior.periodo} (${fmtBRL(mmTotal.maior.total)})`;
-document.getElementById('menorPeriodoTotal').textContent = `Período ${mmTotal.menor.periodo} (${fmtBRL(mmTotal.menor.total)})`;
-
-const variacao = ((mmTotal.maior.total - mmTotal.menor.total) / mmTotal.menor.total * 100).toFixed(0);
-document.getElementById('leituraFactual').textContent =
-  `O período ${mmTotal.maior.periodo} teve a maior receita somada (${fmtBRL(mmTotal.maior.total)}) e o período ${mmTotal.menor.periodo} a menor (${fmtBRL(mmTotal.menor.total)}) — variação de ${variacao}% entre eles. Sem identificação de mês, não é possível atribuir causa (sazonalidade, promoção, dia da semana etc.) a essa diferença.`;
+const perdaTotal = inteiro.perda + metade.perda;
+document.getElementById('leituraPerda').textContent =
+  `Inteiro (9366): ${((inteiro.perda/inteiro.valor)*100).toFixed(2)}% de perda sobre a venda registrada (${fmtBRL(inteiro.perda)} ÷ ${fmtBRL(inteiro.valor)}). Metade (9521): ${((metade.perda/metade.valor)*100).toFixed(2)}% (${fmtBRL(metade.perda)} ÷ ${fmtBRL(metade.valor)}). Combinado: ${((perdaTotal/vendaTotalFrango)*100).toFixed(2)}% (${fmtBRL(perdaTotal)} ÷ ${fmtBRL(vendaTotalFrango)}).`;
 
 const ORANGE = '#ff5a1f';
 const ORANGE2 = '#ff8a3d';
@@ -1072,47 +1268,63 @@ const TEXTCOLOR = '#b8a89e';
 Chart.defaults.color = TEXTCOLOR;
 Chart.defaults.font.family = "-apple-system, 'Segoe UI', sans-serif";
 
-new Chart(document.getElementById('chartInteiroQtd'), {
+const LABELS_PROD = ['Inteiro (9366)', 'Metade (9521)'];
+
+new Chart(document.getElementById('chartVenda'), {
   type:'bar',
-  data:{
-    labels: inteiro.map(r=>'Período '+r.periodo),
-    datasets:[{label:'Quantidade vendida (un)', data:inteiro.map(r=>r.qtd), backgroundColor:ORANGE, borderRadius:6}]
-  },
+  data:{ labels: LABELS_PROD, datasets:[{label:'Venda (R$)', data:[inteiro.valor, metade.valor], backgroundColor:[ORANGE, ORANGE2], borderRadius:6}] },
   options:{responsive:true,maintainAspectRatio:false,
     scales:{x:{grid:{color:GRIDCOLOR}}, y:{grid:{color:GRIDCOLOR}}},
     plugins:{legend:{display:false}}}
 });
 
-new Chart(document.getElementById('chartMetadeQtd'), {
+new Chart(document.getElementById('chartUnidades'), {
   type:'bar',
-  data:{
-    labels: metade.map(r=>'Período '+r.periodo),
-    datasets:[{label:'Quantidade vendida (un)', data:metade.map(r=>r.qtd), backgroundColor:ORANGE2, borderRadius:6}]
-  },
+  data:{ labels: LABELS_PROD, datasets:[{label:'Unidades', data:[inteiro.qtd, metade.qtd], backgroundColor:[ORANGE, ORANGE2], borderRadius:6}] },
   options:{responsive:true,maintainAspectRatio:false,
     scales:{x:{grid:{color:GRIDCOLOR}}, y:{grid:{color:GRIDCOLOR}}},
     plugins:{legend:{display:false}}}
 });
 
-new Chart(document.getElementById('chartReceita'), {
-  type:'line',
-  data:{
-    labels: inteiro.map(r=>'Período '+r.periodo),
-    datasets:[
-      {label:'Receita Inteiro (9366)', data:inteiro.map(r=>r.valor), borderColor:ORANGE, backgroundColor:'rgba(255,90,31,.15)', fill:true, tension:.3},
-      {label:'Receita Metade (9521)', data:metade.map(r=>r.valor), borderColor:RED, backgroundColor:'rgba(224,52,42,.12)', fill:true, tension:.3},
-    ]
-  },
+new Chart(document.getElementById('chartParticipacao'), {
+  type:'doughnut',
+  data:{ labels: LABELS_PROD, datasets:[{data:[inteiro.valor, metade.valor], backgroundColor:[ORANGE, ORANGE2]}] },
   options:{responsive:true,maintainAspectRatio:false,
-    scales:{x:{grid:{color:GRIDCOLOR}}, y:{grid:{color:GRIDCOLOR}}},
     plugins:{legend:{labels:{color:'#f5ece7'}}}}
 });
 
-const totalInteiro = inteiro.reduce((s,r)=>s+r.valor,0);
-const totalMetade = metade.reduce((s,r)=>s+r.valor,0);
-const totalGeral = totalInteiro + totalMetade;
-document.getElementById('partInteiro').textContent = ((totalInteiro/totalGeral)*100).toFixed(1)+'%';
-document.getElementById('partMetade').textContent = ((totalMetade/totalGeral)*100).toFixed(1)+'%';
+new Chart(document.getElementById('chartPerda'), {
+  type:'bar',
+  data:{ labels: LABELS_PROD, datasets:[{label:'Valor de perda (R$)', data:[inteiro.perda, metade.perda], backgroundColor:[RED, '#ff8a7a'], borderRadius:6}] },
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{grid:{color:GRIDCOLOR}}, y:{grid:{color:GRIDCOLOR}}},
+    plugins:{legend:{display:false}}}
+});
+
+new Chart(document.getElementById('chartVendaPerda'), {
+  type:'bar',
+  data:{
+    labels: LABELS_PROD,
+    datasets:[
+      {label:'Venda (R$)', data:[inteiro.valor, metade.valor], backgroundColor:ORANGE, borderRadius:6},
+      {label:'Perda (R$)', data:[inteiro.perda, metade.perda], backgroundColor:RED, borderRadius:6},
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{grid:{color:GRIDCOLOR}}, y:{type:'logarithmic', grid:{color:GRIDCOLOR}}},
+    plugins:{legend:{labels:{color:'#f5ece7'}}}}
+});
+
+new Chart(document.getElementById('chartRepresentacao'), {
+  type:'bar',
+  data:{
+    labels: LABELS_PROD.concat(['Restante da base']),
+    datasets:[{label:'Representação no faturamento total (%)', data:[inteiro.representacao, metade.representacao, 100 - inteiro.representacao - metade.representacao], backgroundColor:[ORANGE, ORANGE2, 'rgba(255,255,255,.08)'], borderRadius:6}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{x:{grid:{color:GRIDCOLOR}}, y:{grid:{color:GRIDCOLOR}}},
+    plugins:{legend:{display:false}}}
+});
 
 // ---- NAVEGAÇÃO ----
 function gotoTab(target){
