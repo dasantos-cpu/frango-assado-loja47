@@ -512,7 +512,7 @@
         </div>
         <div>
           <b style="font-size:.85rem;color:#fff;">O que é frágil</b>
-          <p style="color:var(--text-muted);font-size:.83rem;">Janela de tempo do acumulado, custo oficial, peso físico real, escala exata da coluna Margem %, e preço atual de concorrentes — nenhum confirmado ainda.</p>
+          <p style="color:var(--text-muted);font-size:.83rem;">Janela de tempo do acumulado, custo oficial, peso físico real, e preço atual de concorrentes — nenhum confirmado ainda.</p>
         </div>
       </div>
     </div>
@@ -602,8 +602,8 @@
         <details class="explain">
           <summary>Entenda margem e representação</summary>
           <div class="explain-body">
-            <div class="explain-row"><div class="k">Margem % registrada</div><div class="v">0,19 na base. Comparando com outros produtos da mesma planilha (ex: Salada Bar 0,39, Café da Manhã 0,41 — todos entre 0,3 e 0,5, coerente com a linha TOTAL geral = 37,88%), a coluna parece ser uma fração (0,19 ≈ 19%). <b>Isso é inferência por comparação, não documentação confirmada</b> — interpretação percentual pendente de validação com quem gerou o relatório.</div></div>
-            <div class="explain-row"><div class="k">Margem Objetiva % registrada</div><div class="v">50,00 na base — essa coluna já aparece em escala percentual convencional (50 = 50%). Não comparar diretamente com Margem % até a escala desta ser validada.</div></div>
+            <div class="explain-row"><div class="k">Margem % registrada na fonte</div><div class="v">0,19. O arquivo armazena o valor em formato "Geral" (sem símbolo de percentual aplicado) — isso comprova apenas que a planilha guarda/exibe o número bruto 0,19, <b>não resolve se esse 0,19 significa 19% ou 0,19% de negócio</b>. O cabeçalho "Margem %" sozinho não é suficiente pra decidir a escala. A interpretação percentual de negócio ainda depende da definição do relatório/área responsável — <span class="tag naoencontrado">PENDENTE</span>.</div></div>
+            <div class="explain-row"><div class="k">Margem Objetiva registrada na fonte</div><div class="v">50,00 — valor bruto, sem relação matemática inventada com a Margem % (0,19). Escala de negócio de ambos os campos segue <span class="tag naoencontrado">PENDENTE</span> de validação.</div></div>
             <div class="explain-row"><div class="k">Representação Valor % — validação matemática</div><div class="v">Planilha registra 1,53. Conferido: R$90.816,97 ÷ R$5.940.062,90 (venda total da base) × 100 = 1,53% — <b>bate exatamente</b>. Confirma que é participação no faturamento total da base Consumo Local (não só do frango).</div></div>
           </div>
         </details>
@@ -629,7 +629,7 @@
           <tr><th>R$ Médio do KG Vendido</th><td>R$ 24,86</td></tr>
           <tr><th>Representação Valor %</th><td>1,53% <span class="tag confirmado">validado matematicamente</span></td></tr>
           <tr><th>Valor Verba R$</th><td>R$ 0,00</td></tr>
-          <tr><th>Margem Objetiva %</th><td>50,00%</td></tr>
+          <tr><th>Margem Objetiva %</th><td>50,00 <span class="tag naoencontrado">valor bruto, escala pendente</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -682,8 +682,8 @@
         <details class="explain">
           <summary>Entenda margem e representação</summary>
           <div class="explain-body">
-            <div class="explain-row"><div class="k">Margem % registrada</div><div class="v">0,15 na base — mesma lógica do 9366: comparável a outros produtos na faixa 0,3–0,5, mas escala não documentada oficialmente. Interpretação percentual pendente de validação.</div></div>
-            <div class="explain-row"><div class="k">Margem Objetiva % registrada</div><div class="v">50,00 na base — igual ao inteiro.</div></div>
+            <div class="explain-row"><div class="k">Margem % registrada na fonte</div><div class="v">0,15. Mesma situação do 9366: formato "Geral" no arquivo (sem % aplicado) — comprova só a ausência de símbolo, não resolve se é 15% ou 0,15% de negócio. Interpretação percentual ainda <span class="tag naoencontrado">PENDENTE</span> de validação com o relatório/área responsável.</div></div>
+            <div class="explain-row"><div class="k">Margem Objetiva registrada na fonte</div><div class="v">50,00 — valor bruto, mesma situação do inteiro.</div></div>
             <div class="explain-row"><div class="k">Representação Valor % — validação matemática</div><div class="v">Planilha registra 0,10. Conferido: R$6.034,77 ÷ R$5.940.062,90 × 100 = 0,10% — <b>bate</b>. Confirma participação no faturamento total da base.</div></div>
           </div>
         </details>
@@ -709,7 +709,7 @@
           <tr><th>R$ Médio do KG Vendido</th><td>R$ 39,83</td></tr>
           <tr><th>Representação Valor %</th><td>0,10% <span class="tag confirmado">validado matematicamente</span></td></tr>
           <tr><th>Valor Verba R$</th><td>R$ 0,00</td></tr>
-          <tr><th>Margem Objetiva %</th><td>50,00%</td></tr>
+          <tr><th>Margem Objetiva %</th><td>50,00 <span class="tag naoencontrado">valor bruto, escala pendente</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -1077,8 +1077,12 @@
           <p style="color:var(--text-muted);font-size:.85rem;">1,53% (9366) e 0,10% (9521) batem exatamente com Venda produto ÷ Venda total da base (R$5.940.062,90).</p>
         </div>
         <div>
-          <b style="font-size:.85rem;color:#fff;">Perda registrada é baixa proporcionalmente</b>
-          <p style="color:var(--text-muted);font-size:.85rem;">R$1.700,72 (9366) e R$6,11 (9521) — ver % exato na aba Vendas &amp; Perdas.</p>
+          <b style="font-size:.85rem;color:#fff;">Valor de perda registrado na fonte</b>
+          <p style="color:var(--text-muted);font-size:.85rem;">R$ 1.700,72 (9366) e R$ 6,11 (9521). Relação matemática com a venda disponível na aba Vendas &amp; Perdas — sem conclusão sobre se é alta ou baixa, já que semântica e origem exata do campo não estão confirmadas.</p>
+        </div>
+        <div>
+          <b style="font-size:.85rem;color:#fff;">Formato bruto da coluna Margem % identificado</b>
+          <p style="color:var(--text-muted);font-size:.85rem;">Célula em formato "Geral" no Excel (sem símbolo % aplicado) — isso só prova que o arquivo guarda o número cru (0,19 / 0,15), não resolve a escala de negócio. Interpretação percentual segue <span class="tag naoencontrado">PENDENTE</span>.</p>
         </div>
       </div>
     </div>
@@ -1089,10 +1093,6 @@
         <div>
           <b style="font-size:.85rem;color:#fff;">Custo de compra não documentado</b>
           <p style="color:var(--text-muted);font-size:.85rem;">Nenhuma base (CurvaABC, Checklist) tem coluna de custo de aquisição. Toda margem calculada é simulação, não fato.</p>
-        </div>
-        <div>
-          <b style="font-size:.85rem;color:#fff;">Escala da coluna Margem % não documentada</b>
-          <p style="color:var(--text-muted);font-size:.85rem;">0,19 (9366) e 0,15 (9521) — interpretação de 19%/15% é inferência por comparação com outros produtos, não confirmação oficial.</p>
         </div>
         <div>
           <b style="font-size:.85rem;color:#fff;">Sem identificação temporal do acumulado</b>
@@ -1109,7 +1109,6 @@
       <h3 style="margin-top:0;font-size:.9rem;color:var(--primary-2);">Oportunidades de investigação</h3>
       <p style="color:var(--text-muted);font-size:.82rem;">Pontos que merecem apuração — não são recomendação definitiva.</p>
       <ul style="color:var(--text-muted);font-size:.85rem;padding-left:18px;">
-        <li>Confirmar com quem gera o relatório CurvaABC a escala real da coluna Margem %</li>
         <li>Obter bases mensais com período identificado para habilitar análise de tendência</li>
         <li>Checar preço atual dos 4 concorrentes direto nos apps de delivery</li>
       </ul>
@@ -1124,15 +1123,14 @@
       <h3 style="margin-top:0;font-size:1rem;">Dados necessários</h3>
       <div class="discover-list">
         <div class="item"><span class="n">1</span>Custo oficial de compra junto à Fazenda das Antas</div>
-        <div class="item"><span class="n">2</span>Confirmação da escala real da coluna Margem %</div>
-        <div class="item"><span class="n">3</span>Identificação de data/período do acumulado Venda Total</div>
-        <div class="item"><span class="n">4</span>Confirmação do peso físico oficial (1,6kg inferido vs 1,8kg informado)</div>
-        <div class="item"><span class="n">5</span>Preço atual — Padaria Viriato Gourmet</div>
-        <div class="item"><span class="n">6</span>Preço atual — Princesa Supermercados (Catete)</div>
-        <div class="item"><span class="n">7</span>Preço atual — Boteco Sport Bar</div>
-        <div class="item"><span class="n">8</span>Preço atual — Confeitaria Santo Amaro</div>
-        <div class="item"><span class="n">9</span>Peso dos produtos concorrentes</div>
-        <div class="item"><span class="n">10</span>Composição/acompanhamentos dos concorrentes (farofa, batata, molho)</div>
+        <div class="item"><span class="n">2</span>Identificação de data/período do acumulado Venda Total</div>
+        <div class="item"><span class="n">3</span>Confirmação do peso físico oficial (1,6kg inferido vs 1,8kg informado)</div>
+        <div class="item"><span class="n">4</span>Preço atual — Padaria Viriato Gourmet</div>
+        <div class="item"><span class="n">5</span>Preço atual — Princesa Supermercados (Catete)</div>
+        <div class="item"><span class="n">6</span>Preço atual — Boteco Sport Bar</div>
+        <div class="item"><span class="n">7</span>Preço atual — Confeitaria Santo Amaro</div>
+        <div class="item"><span class="n">8</span>Peso dos produtos concorrentes</div>
+        <div class="item"><span class="n">9</span>Composição/acompanhamentos dos concorrentes (farofa, batata, molho)</div>
       </div>
     </div>
 
